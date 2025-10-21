@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Diagnostico Lesioni Basaloidi - v15.0</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 30px; text-align: center; }
+        header h1 { font-size: 2em; margin-bottom: 10px; }
+        .content { padding: 30px; }
+        .section { margin-bottom: 30px; border: 2px solid #e0e0e0; border-radius: 10px; overflow: hidden; transition: all 0.3s; }
+        .section-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 20px; cursor: pointer; display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2em; }
+        .section-content { padding: 20px; display: none; }
+        .section-content.active { display: block; }
+        .checkbox-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 20px 0; }
+        .checkbox-item { display: flex; align-items: center; padding: 12px; background: #f8f9fa; border-radius: 8px; }
+        .checkbox-item input { margin-right: 10px; width: 20px; height: 20px; cursor: pointer; }
+        .checkbox-item label { cursor: pointer; flex: 1; }
+        .result-box { background: #f0f8ff; border-left: 5px solid #2196F3; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .result-box.warning { background: #fff3cd; border-left-color: #ffc107; }
+        .result-box.danger { background: #f8d7da; border-left-color: #dc3545; }
+        .result-box.success { background: #d4edda; border-left-color: #28a745; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95em; }
+        table th { background: #667eea; color: white; padding: 12px; text-align: left; }
+        table td { padding: 12px; border-bottom: 1px solid #e0e0e0; }
+        .badge { display: inline-block; padding: 5px 10px; border-radius: 20px; font-size: 0.85em; font-weight: bold; margin: 5px; }
+        .badge-success { background: #28a745; color: white; }
+        .badge-danger { background: #dc3545; color: white; }
+        .badge-warning { background: #ffc107; color: #333; }
+        .badge-info { background: #17a2b8; color: white; }
+        button { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 30px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: bold; margin: 10px 5px; transition: all 0.2s; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .alert { padding: 15px; border-radius: 8px; margin: 15px 0; font-weight: 500; }
+        .alert-warning { background: #fff3cd; border: 2px solid #ffc107; color: #856404; }
+        .alert-danger { background: #f8d7da; border: 2px solid #dc3545; color: #721c24; }
+        .alert-info { background: #d1ecf1; border: 2px solid #17a2b8; color: #0c5460; }
+        h3 { color: #667eea; margin: 20px 0 10px 0; font-size: 1.4em; }
+        h4 { color: #764ba2; margin: 15px 0 10px 0; font-size: 1.1em; }
+        ul { margin-left: 20px; margin-top: 10px; }
+        li { margin: 8px 0; }
+        .variant-card { background: white; border: 2px solid #e0e0e0; border-radius: 10px; padding: 20px; margin: 15px 0; }
+        .variant-card.low-risk { border-left: 5px solid #28a745; }
+        .variant-card.high-risk { border-left: 5px solid #dc3545; }
+        footer { background: #2a5298; color: white; text-align: center; padding: 20px; font-size: 0.9em; }
+        footer a { color: #fff; text-decoration: none; font-weight: bold; }
+        .toggle-icon { transition: transform 0.3s; }
+        .toggle-icon.rotated { transform: rotate(180deg); }
+        .flowchart-container { background: white; padding: 30px; border-radius: 10px; margin: 20px 0; overflow-x: auto; }
+        mark { background: #ffeb3b; padding: 2px 4px; border-radius: 3px; }
+        @media (max-width: 768px) { 
+            .checkbox-group { grid-template-columns: 1fr; } 
+            header h1 { font-size: 1.5em; } 
+            .content { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔬 Tool Diagnostico Lesioni Basaloidi</h1>
+            <p>Evidence-Based • v15.0 Enhanced • 2025</p>
+        </header>
+
+
+
+        <div class="content">
+            <!-- FLOWCHART -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection('flowchart')">
+                    <span>📊 ALGORITMO DIAGNOSTICO INTERATTIVO</span>
+                    <span class="toggle-icon" id="flowchart-icon">▼</span>
+                </div>
+                <div class="section-content active" id="flowchart-content">
+                    <div class="flowchart-container">
+                        <svg viewBox="0 0 800 900" style="width: 100%; max-width: 800px; margin: 0 auto; display: block;">
+                            <g class="flowchart-node" onclick="alert('🔬 START: Proliferazione basaloide cutanea')">
+                                <rect x="300" y="20" width="200" height="60" rx="10" fill="#667eea" stroke="#1e3c72" stroke-width="2"/>
+                                <text x="400" y="55" text-anchor="middle" fill="white" font-weight="bold" font-size="14">Proliferazione Basaloide</text>
+                            </g>
+                            <line x1="400" y1="80" x2="400" y2="120" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            <g><rect x="280" y="120" width="240" height="60" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/><text x="400" y="155" text-anchor="middle" font-weight="bold" font-size="14">Retrazione stromale?</text></g>
+                            <line x1="300" y1="180" x2="200" y2="220" stroke="#28a745" stroke-width="3" marker-end="url(#arrowhead)"/><text x="220" y="200" fill="#28a745" font-weight="bold">SÌ</text>
+                            <line x1="500" y1="180" x2="600" y2="220" stroke="#dc3545" stroke-width="3" marker-end="url(#arrowhead)"/><text x="570" y="200" fill="#dc3545" font-weight="bold">NO</text>
+                            <g><rect x="80" y="220" width="240" height="60" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/><text x="200" y="255" text-anchor="middle" font-weight="bold" font-size="14">Ber-EP4 positivo?</text></g>
+                            <line x1="200" y1="280" x2="200" y2="320" stroke="#28a745" stroke-width="3" marker-end="url(#arrowhead)"/>
+                            <g onclick="alert('✅ BCC confermato! Valutare variante istologica')"><rect x="80" y="320" width="240" height="80" rx="10" fill="#28a745" stroke="#155724" stroke-width="2"/><text x="200" y="350" text-anchor="middle" fill="white" font-weight="bold" font-size="16">BCC</text><text x="200" y="370" text-anchor="middle" fill="white" font-size="12">Valutare variante</text><text x="200" y="387" text-anchor="middle" fill="white" font-size="12">istologica</text></g>
+                            <g><rect x="480" y="220" width="240" height="60" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/><text x="600" y="255" text-anchor="middle" font-weight="bold" font-size="14">Strutture duttali?</text></g>
+                            <line x1="560" y1="280" x2="480" y2="320" stroke="#28a745" stroke-width="3" marker-end="url(#arrowhead)"/><text x="500" y="300" fill="#28a745" font-weight="bold">SÌ</text>
+                            <g><rect x="360" y="320" width="240" height="60" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/><text x="480" y="355" text-anchor="middle" font-weight="bold" font-size="14">CK7+ diffuso?</text></g>
+                            <line x1="480" y1="380" x2="480" y2="420" stroke="#28a745" stroke-width="3" marker-end="url(#arrowhead)"/>
+                            <g onclick="alert('💧 Lesione eccrina! DD: Poroma/Spiroadenoma/Siringoma/Idroadenoma')"><rect x="360" y="420" width="240" height="80" rx="10" fill="#17a2b8" stroke="#117a8b" stroke-width="2"/><text x="480" y="450" text-anchor="middle" fill="white" font-weight="bold" font-size="16">LESIONE ECCRINA</text><text x="480" y="470" text-anchor="middle" fill="white" font-size="11">Poroma/Spiroadenoma</text><text x="480" y="487" text-anchor="middle" fill="white" font-size="11">Siringoma/Idroadenoma</text></g>
+                            <line x1="640" y1="280" x2="680" y2="320" stroke="#dc3545" stroke-width="3" marker-end="url(#arrowhead)"/><text x="670" y="300" fill="#dc3545" font-weight="bold">NO</text>
+                            <g><rect x="620" y="320" width="160" height="80" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/><text x="700" y="345" text-anchor="middle" font-weight="bold" font-size="13">Microcisti +</text><text x="700" y="363" text-anchor="middle" font-weight="bold" font-size="13">infiltrazione</text><text x="700" y="381" text-anchor="middle" font-weight="bold" font-size="13">profonda?</text></g>
+                            <line x1="700" y1="400" x2="700" y2="440" stroke="#28a745" stroke-width="3" marker-end="url(#arrowhead)"/>
+                            <g onclick="alert('🚨 MAC! CK7+ Ber-EP4− + invasione perineurale. Mohs GOLD STANDARD!')"><rect x="620" y="440" width="160" height="80" rx="10" fill="#dc3545" stroke="#721c24" stroke-width="2"/><text x="700" y="470" text-anchor="middle" fill="white" font-weight="bold" font-size="16">MAC</text><text x="700" y="490" text-anchor="middle" fill="white" font-size="11">CK7+ Ber-EP4−</text><text x="700" y="507" text-anchor="middle" fill="white" font-size="11">Mohs surgery!</text></g>
+                            <line x1="200" y1="280" x2="150" y2="320" stroke="#dc3545" stroke-width="3" marker-end="url(#arrowhead)"/><text x="160" y="300" fill="#dc3545" font-weight="bold">NO</text>
+                            <g><rect x="20" y="420" width="260" height="60" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/><text x="150" y="455" text-anchor="middle" font-weight="bold" font-size="14">CD10+ e/o CD34+?</text></g>
+                            <line x1="150" y1="320" x2="150" y2="420" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            <line x1="150" y1="480" x2="150" y2="520" stroke="#28a745" stroke-width="3" marker-end="url(#arrowhead)"/>
+                            <g onclick="alert('🔷 Tricoblastoma/Trichoepithelioma! Differenziazione follicolare')"><rect x="20" y="520" width="260" height="80" rx="10" fill="#9c27b0" stroke="#6a1b9a" stroke-width="2"/><text x="150" y="550" text-anchor="middle" fill="white" font-weight="bold" font-size="16">TRICOBLASTOMA</text><text x="150" y="570" text-anchor="middle" fill="white" font-size="11">Trichoepithelioma</text><text x="150" y="587" text-anchor="middle" fill="white" font-size="11">Differenziazione follicolare</text></g>
+                            <defs><marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#333"/></marker></defs>
+                        </svg>
+                        <div class="alert alert-info" style="margin-top: 20px;"><strong>💡 Tip:</strong> Clicca sui box colorati per info rapide!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MORFOLOGIA -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection('morphology')">
+                    <span>📊 MORFOLOGIA H&E - Criteri Diagnostici</span>
+                    <span class="toggle-icon" id="morphology-icon">▼</span>
+                </div>
+                <div class="section-content" id="morphology-content">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item"><input type="checkbox" id="palisade" name="morphology"><label for="palisade">Palizzata periferica nucleare</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="retraction" name="morphology"><label for="retraction">Retrazione stromale (artefatto)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="basaloid" name="morphology"><label for="basaloid">Cellule basaloidi (citoplasma scarso)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="clefting" name="morphology"><label for="clefting">Spazi chiari peri-tumorali (clefting)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="mucin" name="morphology"><label for="mucin">Stroma mucinoso</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="apoptosis" name="morphology"><label for="apoptosis">Corpi apoptotici</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="pigment" name="morphology"><label for="pigment">Pigmento melanico</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="papillary" name="morphology"><label for="papillary">Papille stromali (forma cistica)</label></div>
+                    </div>
+                    <button onclick="analyzeMorphology()">Analizza Morfologia</button>
+                    <button onclick="resetMorphology()">Reset</button>
+                    <div id="morphology-result"></div>
+                </div>
+            </div>
+
+            <!-- IHC PANEL -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection('ihc')">
+                    <span>🧪 PANEL IHC - Diagnosi Differenziale</span>
+                    <span class="toggle-icon" id="ihc-icon">▼</span>
+                </div>
+                <div class="section-content" id="ihc-content">
+                    <h3>Seleziona i marcatori positivi:</h3>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item"><input type="checkbox" id="berep4" name="ihc"><label for="berep4">Ber-EP4 (diffuso)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="p63" name="ihc"><label for="p63">p63 (diffuso nucleare)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="p40" name="ihc"><label for="p40">p40 (diffuso nucleare)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="bcl2" name="ihc"><label for="bcl2">Bcl-2 (diffuso)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ck20" name="ihc"><label for="ck20">CK20 (cellule di Merkel)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cd10" name="ihc"><label for="cd10">CD10 (stromale)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cd34" name="ihc"><label for="cd34">CD34 (stromale)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="androgen" name="ihc"><label for="androgen">Recettore androgenico</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ck7" name="ihc"><label for="ck7">CK7 (diffuso)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cea" name="ihc"><label for="cea">CEA (duttale)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ema" name="ihc"><label for="ema">EMA (duttale)</label></div>
+                    </div>
+                    <button onclick="analyzeIHC()">Analizza IHC</button>
+                    <button onclick="resetIHC()">Reset</button>
+                    <div id="ihc-result"></div>
+                </div>
+            </div>
+
+            <!-- VARIANTI BCC COMPLETE -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection('variants')">
+                    <span>⚠️ VARIANTI ISTOLOGICHE BCC</span>
+                    <span class="toggle-icon" id="variants-icon">▼</span>
+                </div>
+                <div class="section-content" id="variants-content">
+                    <div class="alert alert-info"><strong>Seleziona la/le variante/i identificata/e:</strong></div>
+                    <h4 style="color: #28a745;">✅ VARIANTI A BASSO RISCHIO:</h4>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item"><input type="checkbox" id="var-nodular" name="variant" onchange="updateVariantInfo()"><label for="var-nodular">Nodulare (60-80%)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="var-cystic" name="variant" onchange="updateVariantInfo()"><label for="var-cystic">Nodulare-Cistico</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="var-superficial" name="variant" onchange="updateVariantInfo()"><label for="var-superficial">Superficiale/Multicentrico</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="var-infundibulo" name="variant" onchange="updateVariantInfo()"><label for="var-infundibulo">Infundibulo-Cistico</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="var-pinkus" name="variant" onchange="updateVariantInfo()"><label for="var-pinkus">Fibroepiteliale (Pinkus)</label></div>
+                    </div>
+                    <h4 style="color: #dc3545;">⚠️ VARIANTI AD ALTO RISCHIO (Aggressive):</h4>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item"><input type="checkbox" id="var-infiltrative" name="variant" onchange="updateVariantInfo()"><label for="var-infiltrative">Infiltrativo</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="var-micronodular" name="variant" onchange="updateVariantInfo()"><label for="var-micronodular">Micronodulare</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="var-morphea" name="variant" onchange="updateVariantInfo()"><label for="var-morphea">Morpheiforme/Sclerosante</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="var-mixed" name="variant" onchange="updateVariantInfo()"><label for="var-mixed">Misto (con componente aggressiva)</label></div>
+                    </div>
+                    <div id="variant-details"></div>
+                </div>
+            </div>
+
+            <!-- DD ECCRINE -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection('eccrine')">
+                    <span>💧 DD LESIONI POROMATOSE/ECCRINE</span>
+                    <span class="toggle-icon" id="eccrine-icon">▼</span>
+                </div>
+                <div class="section-content" id="eccrine-content">
+                    <div class="alert alert-warning"><strong>⚠️ RED FLAGS:</strong> Strutture duttali + CK7+ + Ber-EP4− = NON È BCC!</div>
+                    <table>
+                        <thead><tr><th>Feature</th><th>BCC</th><th>Poroma</th><th>Idroadenoma cistico</th><th>Spiroadenoma</th><th>Siringoma</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Palizzata periferica</strong></td><td>✓✓</td><td>−</td><td>−</td><td>−</td><td>−</td></tr>
+                            <tr><td><strong>Retrazione stromale</strong></td><td>✓✓</td><td>−</td><td>−</td><td>+/−</td><td>−</td></tr>
+                            <tr><td><strong>Strutture duttali</strong></td><td>−</td><td>✓</td><td>✓✓</td><td>✓✓</td><td>✓✓</td></tr>
+                            <tr><td><strong>Cuticole</strong></td><td>−</td><td>✓✓</td><td>−</td><td>✓</td><td>−</td></tr>
+                            <tr><td><strong>Ber-EP4</strong></td><td><span class="badge badge-success">✓✓</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td></tr>
+                            <tr><td><strong>CEA</strong></td><td>−</td><td>✓</td><td>✓✓</td><td>✓</td><td>✓</td></tr>
+                            <tr><td><strong>CK7</strong></td><td>−</td><td>✓</td><td>✓✓</td><td>✓✓</td><td>✓✓</td></tr>
+                            <tr><td><strong>p63 diffuso</strong></td><td>✓✓</td><td>−</td><td>+/−</td><td>+/−</td><td>−</td></tr>
+                        </tbody>
+                    </table>
+                    <h3>💡 TAKE HOME MESSAGES:</h3>
+                    <ul>
+                        <li><strong>Presenza strutture duttali = STOP! Non è BCC!</strong></li>
+                        <li><strong>Ber-EP4 negativo in tutte le lesioni eccrine</strong></li>
+                        <li><strong>CK7 + CEA positivi = differenziazione eccrina</strong></li>
+                        <li><strong>Retrazione stromale + palizzata = signature BCC</strong></li>
+                        <li><strong>In dubbio: pannello IHC risolve 99% dei casi!</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- MAC -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection('mac')">
+                    <span>🚨 CARCINOMA ANNESSIALE MICROCISTICO (MAC)</span>
+                    <span class="toggle-icon" id="mac-icon">▼</span>
+                </div>
+                <div class="section-content" id="mac-content">
+                    <div class="alert alert-danger"><strong>⚠️ "Il lupo travestito da agnello":</strong> Morfologia BLAND + infiltrazione PROFONDA = MAC!</div>
+                    <h3>🔬 Features diagnostiche chiave:</h3>
+                    <div class="variant-card high-risk">
+                        <h4>Morfologia "a doppio livello":</h4>
+                        <ul>
+                            <li><strong>Derma superficiale:</strong> Aspetto "rassicurante" (siringoma-like)</li>
+                            <li><strong>Derma profondo/sottocute:</strong> Piccoli dotti e corde infiltranti</li>
+                            <li><strong>Microcisti</strong> con materiale cheratinico</li>
+                            <li><strong>Stroma desmoplastico</strong> prominente</li>
+                            <li><strong>⚠️ Invasione perineurale (50-80%)</strong> - SEMPRE cercare con S100!</li>
+                        </ul>
+                    </div>
+                    <h3>🧪 IHC Diagnostica:</h3>
+                    <table>
+                        <thead><tr><th>Marker</th><th>MAC</th><th>Note</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>CK7</strong></td><td><span class="badge badge-success">✓✓ Diffuso</span></td><td>Marker chiave!</td></tr>
+                            <tr><td><strong>Ber-EP4</strong></td><td><span class="badge badge-danger">⚠️ NEGATIVO</span></td><td>Discrimina da BCC!</td></tr>
+                            <tr><td><strong>CEA</strong></td><td><span class="badge badge-warning">✓ focale</span></td><td>Componente duttale</td></tr>
+                            <tr><td><strong>p63</strong></td><td><span class="badge badge-warning">✓ variabile</span></td><td>Meno diffuso che in BCC</td></tr>
+                            <tr><td><strong>Ki67</strong></td><td><span class="badge badge-info">&lt;10%</span></td><td>Contrasta con aspetto infiltrativo</td></tr>
+                            <tr><td><strong>S100</strong></td><td><span class="badge badge-danger">✓</span></td><td>Per evidenziare invasione perineurale</td></tr>
+                        </tbody>
+                    </table>
+                    <h3>⚠️ Management:</h3>
+                    <div class="result-box danger">
+                        <ul>
+                            <li><strong>Mohs surgery = GOLD STANDARD</strong></li>
+                            <li>Margini convenzionali: ≥10mm (recidive comunque frequenti)</li>
+                            <li>Follow-up stretto: ogni 3-6 mesi × 5 anni</li>
+                            <li>Imaging se invasione profonda/perineurale</li>
+                            <li><strong>Recidiva locale: 40-60%</strong> (margini inadeguati)</li>
+                        </ul>
+                    </div>
+                    <h3>🚨 PITFALLS:</h3>
+                    <div class="alert alert-warning">
+                        <ol>
+                            <li><strong>Biopsia superficiale</strong> → aspetto benigno misconosciuto</li>
+                            <li><strong>Bassa cellularità + mitosi rare</strong> → falso senso di benignità</li>
+                            <li><strong>Non cercare invasione perineurale</strong> → miss prognostico</li>
+                            <li><strong>Margini inadeguati</strong> → recidive garantite</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BIBLIOGRAFIA COMPLETA -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection('bibliography')">
+                    <span>📚 BIBLIOGRAFIA EVIDENCE-BASED</span>
+                    <span class="toggle-icon" id="bibliography-icon">▼</span>
+                </div>
+                <div class="section-content" id="bibliography-content">
+                    <div style="font-size: 0.9em; line-height: 1.8;">
+                        <h3>🔬 Morfologia & Istologia BCC:</h3>
+                        <ol>
+                            <li><strong>Sexton M, Jones DB, Maloney ME.</strong> Histologic pattern analysis of basal cell carcinoma. Study of a series of 1039 consecutive neoplasms. <em>J Am Acad Dermatol</em> 1990;23:1118-1126.</li>
+                            <li><strong>Crowson AN.</strong> Basal cell carcinoma: biology, morphology and clinical implications. <em>Mod Pathol</em> 2006;19:S127-S147. ⭐</li>
+                            <li><strong>Rowe DE, Carroll RJ, Day CL Jr.</strong> Prognostic factors for local recurrence, metastasis, and survival rates in squamous cell carcinoma of the skin, ear, and lip. <em>J Am Acad Dermatol</em> 1992;26:976-990.</li>
+                        </ol>
+                        <h3>🧪 Immunoistochimica:</h3>
+                        <ol start="4">
+                            <li><strong>Kanitakis J.</strong> Anatomy, histology and immunohistochemistry of normal human skin. <em>Eur J Dermatol</em> 2002;12:390-401.</li>
+                            <li><strong>Jih DM, Lyle S, Elenitsas R, et al.</strong> Cytokeratin 15 expression in trichoepitheliomas and a subset of basal cell carcinomas suggests they originate from hair follicle stem cells. <em>J Cutan Pathol</em> 1999;26:113-118.</li>
+                            <li><strong>Poblet E, Jiménez-Acosta F, Rocamora A.</strong> QBEND/10 (anti-CD34 antibody) in external root sheath cells and basal cell carcinoma. <em>J Cutan Pathol</em> 1994;21:224-228.</li>
+                            <li><strong>Beer TW, Shepherd P, Theaker JM.</strong> Ber-EP4 and epithelial membrane antigen aid distinction of basal cell, squamous cell and basosquamous carcinomas of the skin. <em>Histopathology</em> 2000;37:218-223. ⭐</li>
+                        </ol>
+                        <h3>⚠️ Varianti BCC & Management:</h3>
+                        <ol start="8">
+                            <li><strong>NCCN Clinical Practice Guidelines in Oncology: Basal Cell Skin Cancer.</strong> Version 1.2024. ⭐⭐</li>
+                            <li><strong>Bichakjian CK, Olencki T, Aasi SZ, et al.</strong> Basal Cell Skin Cancer, Version 1.2016, NCCN Clinical Practice Guidelines in Oncology. <em>J Natl Compr Canc Netw</em> 2016;14:574-597.</li>
+                            <li><strong>Leibovitch I, Huilgol SC, Selva D, et al.</strong> Basal cell carcinoma treated with Mohs surgery in Australia II. Outcome at 5-year follow-up. <em>J Am Acad Dermatol</em> 2005;53:452-457.</li>
+                        </ol>
+                        <h3>🔄 DD Tricoblastoma/Trichoepithelioma:</h3>
+                        <ol start="11">
+                            <li><strong>Brooke JD.</strong> Epithelioma adenoides cysticum. <em>Br J Dermatol</em> 1892;4:269-287.</li>
+                            <li><strong>Schulz T, Hartschuh W.</strong> Folliculo-sebaceous cystic hamartoma is a trichofolliculoma at its very late stage. <em>J Cutan Pathol</em> 1998;25:354-364.</li>
+                            <li><strong>Misago N, Suse T, Uemura T, Narisawa Y.</strong> Basal cell carcinoma with ductal and glandular differentiation. <em>Am J Dermatopathol</em> 2004;26:374-382.</li>
+                        </ol>
+                        <h3>💧 Lesioni Eccrine/Poromatose:</h3>
+                        <ol start="14">
+                            <li><strong>Berman A, Winkelmann RK.</strong> Porocarcinoma and syringoid eccrine carcinoma. <em>Arch Dermatol</em> 1982;118:250-251.</li>
+                            <li><strong>Plaza JA, Ortega PF, Stockman DL, Suster S.</strong> Value of p63 and podoplanin (D2-40) immunoreactivity in the distinction between primary cutaneous tumors and adenocarcinomas metastatic to the skin. <em>Am J Dermatopathol</em> 2011;33:334-341.</li>
+                            <li><strong>Minagawa A, Koga H.</strong> Diagnostic immunohistochemistry for cutaneous adnexal tumors. <em>J Dermatol</em> 2014;41:305-314.</li>
+                            <li><strong>Ivan D, Diwan AH, Prieto VG.</strong> Expression of p63 in primary cutaneous adnexal neoplasms and adenocarcinoma metastatic to the skin. <em>Mod Pathol</em> 2005;18:137-142.</li>
+                        </ol>
+                        <h3>🚨 Carcinoma Annessiale Microcistico:</h3>
+                        <ol start="18">
+                            <li><strong>Goldstein DJ, Barr RJ, Santa Cruz DJ.</strong> Microcystic adnexal carcinoma: a distinct clinicopathologic entity. <em>Cancer</em> 1982;50:566-572. ⭐ <em>(Descrizione originale)</em></li>
+                            <li><strong>Chiller K, Passaro D, Scheuller M, et al.</strong> Microcystic adnexal carcinoma: forty-eight cases, their treatment, and their outcome. <em>Arch Dermatol</em> 2000;136:1355-1359.</li>
+                            <li><strong>Leibovitch I, Huilgol SC, Selva D, et al.</strong> Microcystic adnexal carcinoma: treatment with Mohs micrographic surgery. <em>J Am Acad Dermatol</em> 2005;52:295-300.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>🔬 Tool Diagnostico Lesioni Basaloidi v15.0 Enhanced</p>
+            <p>Evidence-Based • 2025 • Sviluppato da <a href="https://github.com/Infingardo" target="_blank">@Infingardo</a></p>
+            <p style="font-size: 0.8em; margin-top: 10px; opacity: 0.8;">Per uso educazionale. Non sostituisce giudizio clinico.</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            const content = document.getElementById(id + '-content');
+            const icon = document.getElementById(id + '-icon');
+            if (content && icon) {
+                content.classList.toggle('active');
+                icon.classList.toggle('rotated');
+            }
+        }
+
+        function analyzeMorphology() {
+            const palisade = document.getElementById('palisade').checked;
+            const retraction = document.getElementById('retraction').checked;
+            const basaloid = document.getElementById('basaloid').checked;
+            const clefting = document.getElementById('clefting').checked;
+            let score = (palisade ? 3 : 0) + (retraction ? 3 : 0) + (basaloid ? 2 : 0) + (clefting ? 2 : 0);
+            
+            const resultDiv = document.getElementById('morphology-result');
+            if (score >= 6) {
+                resultDiv.innerHTML = `<div class="result-box success"><h3>✅ MORFOLOGIA ALTAMENTE SUGGESTIVA PER BCC</h3><p><strong>Score: ${score}/10</strong></p><p>Pattern morfologico classico. <strong>Confermare con Ber-EP4 + p63</strong></p></div>`;
+            } else if (score >= 3) {
+                resultDiv.innerHTML = `<div class="result-box warning"><h3>⚠️ MORFOLOGIA COMPATIBILE MA NON SPECIFICA</h3><p><strong>Score: ${score}/10</strong></p><p>Considerare DD: Tricoblastoma, lesioni eccrine, MAC. <strong>Panel IHC raccomandato</strong></p></div>`;
+            } else {
+                resultDiv.innerHTML = `<div class="result-box danger"><h3>❌ MORFOLOGIA NON SUGGESTIVA PER BCC</h3><p><strong>Score: ${score}/10</strong></p><p>Valutare altre DD. <strong>Panel IHC esteso essenziale</strong></p></div>`;
+            }
+        }
+
+        function resetMorphology() {
+            document.querySelectorAll('input[name="morphology"]').forEach(cb => cb.checked = false);
+            document.getElementById('morphology-result').innerHTML = '';
+        }
+
+        function analyzeIHC() {
+            const berep4 = document.getElementById('berep4').checked;
+            const p63 = document.getElementById('p63').checked;
+            const ck7 = document.getElementById('ck7').checked;
+            const cea = document.getElementById('cea').checked;
+            const cd10 = document.getElementById('cd10').checked;
+            const cd34 = document.getElementById('cd34').checked;
+            const bcl2 = document.getElementById('bcl2').checked;
+            const ck20 = document.getElementById('ck20').checked;
+            
+            const resultDiv = document.getElementById('ihc-result');
+            
+            if (ck20) {
+                resultDiv.innerHTML = `<div class="result-box danger"><h3>🔴 CK20+ : CARCINOMA A CELLULE DI MERKEL</h3><p><strong>Pattern dot-like paranucleolare</strong></p><p>Neoplasia neuroendocrina ad alto grado. <strong>Confermare con:</strong> Sinaptofisina, Cromogranina, CD56</p></div>`;
+            } else if (berep4 && p63 && !ck7) {
+                resultDiv.innerHTML = `<div class="result-box success"><h3>✅ PATTERN IHC DIAGNOSTICO PER BCC</h3><p><strong>Ber-EP4+ / p63+ diffuso</strong></p><p>Profile immunofenotipico classico di carcinoma basocellulare.</p>${bcl2 ? '<p><span class="badge badge-info">Bcl-2+</span> supporta la diagnosi</p>' : ''}</div>`;
+            } else if (!berep4 && p63 && (cd10 || cd34)) {
+                resultDiv.innerHTML = `<div class="result-box warning"><h3>⚠️ PATTERN SUGGESTIVO PER TRICOBLASTOMA</h3><p><strong>Ber-EP4− / p63+ / CD10+/CD34+</strong></p><p>Differenziazione follicolare. Correlazione morfologica essenziale.</p><p><strong>DD:</strong> Trichoepithelioma se piccolo e simmetrico</p></div>`;
+            } else if (ck7 && cea && !berep4) {
+                resultDiv.innerHTML = `<div class="result-box warning"><h3>💧 PATTERN SUGGESTIVO PER LESIONE ECCRINA</h3><p><strong>CK7+ / CEA+ / Ber-EP4−</strong></p><p>Differenziazione eccrina/duttale.</p><p><strong>DD:</strong> Poroma, Spiroadenoma, Siringoma, Idroadenoma</p><p><strong>Se infiltrazione profonda + stroma desmoplastico: considerare MAC!</strong></p></div>`;
+            } else {
+                resultDiv.innerHTML = `<div class="result-box"><h3>📊 PATTERN IHC NON CONCLUSIVO</h3><p>Profile immunofenotipico atipico. Completare panel e rivalutare morfologia.</p></div>`;
+            }
+        }
+
+        function resetIHC() {
+            document.querySelectorAll('input[name="ihc"]').forEach(cb => cb.checked = false);
+            document.getElementById('ihc-result').innerHTML = '';
+        }
+
+        function updateVariantInfo() {
+            const variants = {
+                'var-nodular': { name: 'BCC Nodulare', risk: 'low', description: 'Variante più comune (60-80%). Nidi basaloidi con palizzata periferica classica.', margins: '4mm (>95% clearance)', recurrence: '<5%', mohs: 'Non necessaria per lesioni <2cm in zone non-H' },
+                'var-cystic': { name: 'BCC Nodulare-Cistico', risk: 'low', description: 'Degenerazione cistica centrale. Comportamento identico al nodulare.', margins: '4mm', recurrence: '<5%', mohs: 'Non necessaria' },
+                'var-superficial': { name: 'BCC Superficiale/Multicentrico', risk: 'low', description: 'Nidi multipli superficiali connessi all\'epidermide. Tipico del tronco.', margins: '4mm (5mm preferibile)', recurrence: '5-10%', mohs: 'Non necessaria se margini adeguati' },
+                'var-infundibulo': { name: 'BCC Infundibulo-Cistico', risk: 'low', description: 'Raro. Cisti infundibulari con palizzata. Prognosi eccellente.', margins: '4mm', recurrence: '<5%', mohs: 'Non necessaria' },
+                'var-pinkus': { name: 'BCC Fibroepiteliale (Pinkus)', risk: 'low', description: 'Cordoni anastomizzanti in stroma fibroso. Indolente.', margins: '4mm', recurrence: '<5%', mohs: 'Non necessaria' },
+                'var-infiltrative': { name: 'BCC Infiltrativo', risk: 'high', description: 'Cordoni irregolari infiltranti in profondità. Margini mal definiti clinicamente.', margins: '≥6mm (Mohs preferita)', recurrence: '20-25%', mohs: '✓✓ FORTEMENTE RACCOMANDATA' },
+                'var-micronodular': { name: 'BCC Micronodulare', risk: 'high', description: 'Nidi piccoli (<0.15mm) che infiltrano oltre margini apparenti.', margins: '≥6mm (Mohs preferita)', recurrence: '15-20%', mohs: '✓✓ FORTEMENTE RACCOMANDATA' },
+                'var-morphea': { name: 'BCC Morpheiforme/Sclerosante', risk: 'high', description: 'Stroma desmoplastico prominente. MOLTO AGGRESSIVO. Simula cicatrice.', margins: '≥8-10mm (Mohs GOLD STANDARD)', recurrence: '25-30%', mohs: '✓✓✓ INDICAZIONE ASSOLUTA' },
+                'var-mixed': { name: 'BCC Misto', risk: 'high', description: 'Combinazione di pattern. Management secondo componente più aggressiva.', margins: 'Secondo sottotipo peggiore', recurrence: 'Secondo componente aggressiva', mohs: 'Se componente aggressiva >10%' }
+            };
+            
+            let html = '';
+            let hasHighRisk = false;
+            
+            for (const [id, data] of Object.entries(variants)) {
+                if (document.getElementById(id)?.checked) {
+                    if (data.risk === 'high') hasHighRisk = true;
+                    html += `<div class="variant-card ${data.risk}-risk">
+                        <h4>${data.name} ${data.risk === 'low' ? '<span class="badge badge-success">BASSO RISCHIO</span>' : '<span class="badge badge-danger">ALTO RISCHIO</span>'}</h4>
+                        <p><strong>Descrizione:</strong> ${data.description}</p>
+                        <p><strong>Margini chirurgici:</strong> ${data.margins}</p>
+                        <p><strong>Rischio recidiva:</strong> ${data.recurrence}</p>
+                        <p><strong>Mohs surgery:</strong> ${data.mohs}</p>
+                    </div>`;
+                }
+            }
+            
+            if (hasHighRisk) {
+                html = `<div class="alert alert-danger"><strong>⚠️ VARIANTE AD ALTO RISCHIO IDENTIFICATA!</strong><ul><li>Valutare invasione perineurale (S100)</li><li>Considerare imaging pre-operatorio se zona H o segni di invasione profonda</li><li>Follow-up intensivo: ogni 6 mesi × 2 anni, poi annuale</li><li>Consulenza dermatochirurgica per Mohs surgery</li></ul></div>` + html;
+            }
+            
+            document.getElementById('variant-details').innerHTML = html || '<div class="alert alert-info">Seleziona una variante per visualizzare i dettagli</div>';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => toggleSection('flowchart'));
+    </script>
+</body>
+</html>
