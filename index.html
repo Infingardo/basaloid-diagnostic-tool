@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tool Diagnostico Lesioni Basaloidi - v15.0</title>
+    <title>Tool Diagnostico Lesioni Basaloidi - v15.1 Fixed</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; min-height: 100vh; }
@@ -23,7 +23,7 @@
         .result-box.warning { background: #fff3cd; border-left-color: #ffc107; }
         .result-box.danger { background: #f8d7da; border-left-color: #dc3545; }
         .result-box.success { background: #d4edda; border-left-color: #28a745; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95em; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.9em; }
         table th { background: #667eea; color: white; padding: 12px; text-align: left; }
         table td { padding: 12px; border-bottom: 1px solid #e0e0e0; }
         .badge { display: inline-block; padding: 5px 10px; border-radius: 20px; font-size: 0.85em; font-weight: bold; margin: 5px; }
@@ -61,10 +61,8 @@
     <div class="container">
         <header>
             <h1>🔬 Tool Diagnostico Lesioni Basaloidi</h1>
-            <p>Evidence-Based • v15.0 Enhanced • 2025</p>
+            <p>Evidence-Based • v15.1 Fixed • 2025</p>
         </header>
-
-
 
         <div class="content">
             <!-- FLOWCHART -->
@@ -75,7 +73,7 @@
                 </div>
                 <div class="section-content active" id="flowchart-content">
                     <div class="flowchart-container">
-                        <svg viewBox="0 0 800 900" style="width: 100%; max-width: 800px; margin: 0 auto; display: block;">
+                        <svg viewBox="0 0 800 1000" style="width: 100%; max-width: 800px; margin: 0 auto; display: block;">
                             <g class="flowchart-node" onclick="alert('🔬 START: Proliferazione basaloide cutanea')">
                                 <rect x="300" y="20" width="200" height="60" rx="10" fill="#667eea" stroke="#1e3c72" stroke-width="2"/>
                                 <text x="400" y="55" text-anchor="middle" fill="white" font-weight="bold" font-size="14">Proliferazione Basaloide</text>
@@ -92,10 +90,10 @@
                             <g><rect x="360" y="320" width="240" height="60" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/><text x="480" y="355" text-anchor="middle" font-weight="bold" font-size="14">CK7+ diffuso?</text></g>
                             <line x1="480" y1="380" x2="480" y2="420" stroke="#28a745" stroke-width="3" marker-end="url(#arrowhead)"/>
                             <g onclick="alert('💧 Lesione eccrina! DD: Poroma/Spiroadenoma/Siringoma/Idroadenoma')"><rect x="360" y="420" width="240" height="80" rx="10" fill="#17a2b8" stroke="#117a8b" stroke-width="2"/><text x="480" y="450" text-anchor="middle" fill="white" font-weight="bold" font-size="16">LESIONE ECCRINA</text><text x="480" y="470" text-anchor="middle" fill="white" font-size="11">Poroma/Spiroadenoma</text><text x="480" y="487" text-anchor="middle" fill="white" font-size="11">Siringoma/Idroadenoma</text></g>
-                            <line x1="640" y1="280" x2="680" y2="320" stroke="#dc3545" stroke-width="3" marker-end="url(#arrowhead)"/><text x="670" y="300" fill="#dc3545" font-weight="bold">NO</text>
-                            <g><rect x="620" y="320" width="160" height="80" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/><text x="700" y="345" text-anchor="middle" font-weight="bold" font-size="13">Microcisti +</text><text x="700" y="363" text-anchor="middle" font-weight="bold" font-size="13">infiltrazione</text><text x="700" y="381" text-anchor="middle" font-weight="bold" font-size="13">profonda?</text></g>
-                            <line x1="700" y1="400" x2="700" y2="440" stroke="#28a745" stroke-width="3" marker-end="url(#arrowhead)"/>
-                            <g onclick="alert('🚨 MAC! CK7+ Ber-EP4− + invasione perineurale. Mohs GOLD STANDARD!')"><rect x="620" y="440" width="160" height="80" rx="10" fill="#dc3545" stroke="#721c24" stroke-width="2"/><text x="700" y="470" text-anchor="middle" fill="white" font-weight="bold" font-size="16">MAC</text><text x="700" y="490" text-anchor="middle" fill="white" font-size="11">CK7+ Ber-EP4−</text><text x="700" y="507" text-anchor="middle" fill="white" font-size="11">Mohs surgery!</text></g>
+                            <line x1="640" y1="280" x2="680" y2="320" stroke="#dc3545" stroke-width="3" marker-end="url(#arrowhead)"/><text x="670" y="300" fill="#dc3545" font-weight="bold">NO DUTTALI</text>
+                            <g><rect x="620" y="320" width="160" height="80" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/><text x="700" y="340" text-anchor="middle" font-weight="bold" font-size="13">CK7+</text><text x="700" y="360" text-anchor="middle" font-weight="bold" font-size="13">Ber-EP4−?</text><text x="700" y="380" text-anchor="middle" font-size="11">(NO duttali)</text></g>
+                            <line x1="700" y1="400" x2="700" y2="440" stroke="#dc3545" stroke-width="3" marker-end="url(#arrowhead)"/><text x="730" y="420" fill="#dc3545" font-weight="bold">SÌ</text>
+                            <g onclick="alert('🚨 MAC! Infiltrazione profonda + stroma desmoplastico. Mohs GOLD STANDARD!')"><rect x="620" y="440" width="160" height="100" rx="10" fill="#dc3545" stroke="#721c24" stroke-width="2"/><text x="700" y="470" text-anchor="middle" fill="white" font-weight="bold" font-size="16">MAC</text><text x="700" y="490" text-anchor="middle" fill="white" font-size="11">CK7+ Ber-EP4−</text><text x="700" y="507" text-anchor="middle" fill="white" font-size="10">NO duttali</text><text x="700" y="524" text-anchor="middle" fill="white" font-size="10">Mohs surgery!</text></g>
                             <line x1="200" y1="280" x2="150" y2="320" stroke="#dc3545" stroke-width="3" marker-end="url(#arrowhead)"/><text x="160" y="300" fill="#dc3545" font-weight="bold">NO</text>
                             <g><rect x="20" y="420" width="260" height="60" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/><text x="150" y="455" text-anchor="middle" font-weight="bold" font-size="14">CD10+ e/o CD34+?</text></g>
                             <line x1="150" y1="320" x2="150" y2="420" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
@@ -185,86 +183,98 @@
                 </div>
             </div>
 
-            <!-- DD ECCRINE -->
+            <!-- DD ECCRINE + MAC -->
             <div class="section">
                 <div class="section-header" onclick="toggleSection('eccrine')">
-                    <span>💧 DD LESIONI POROMATOSE/ECCRINE</span>
+                    <span>💧 DD LESIONI POROMATOSE/ECCRINE vs MAC</span>
                     <span class="toggle-icon" id="eccrine-icon">▼</span>
                 </div>
                 <div class="section-content" id="eccrine-content">
-                    <div class="alert alert-warning"><strong>⚠️ RED FLAGS:</strong> Strutture duttali + CK7+ + Ber-EP4− = NON È BCC!</div>
+                    <div class="alert alert-danger"><strong>⚠️ RED FLAGS CRITICHE:</strong><br>
+                    • Strutture duttali + CK7+ + Ber-EP4− = LESIONE ECCRINA<br>
+                    • CK7+ + Ber-EP4− + ASSENZA duttali + infiltrazione profonda = MAC!
+                    </div>
                     <table>
-                        <thead><tr><th>Feature</th><th>BCC</th><th>Poroma</th><th>Idroadenoma cistico</th><th>Spiroadenoma</th><th>Siringoma</th></tr></thead>
+                        <thead><tr><th>Feature</th><th>BCC</th><th>Poroma</th><th>Idroadenoma cistico</th><th>Spiroadenoma</th><th>Siringoma</th><th>MAC</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>Palizzata periferica</strong></td><td>✓✓</td><td>−</td><td>−</td><td>−</td><td>−</td></tr>
-                            <tr><td><strong>Retrazione stromale</strong></td><td>✓✓</td><td>−</td><td>−</td><td>+/−</td><td>−</td></tr>
-                            <tr><td><strong>Strutture duttali</strong></td><td>−</td><td>✓</td><td>✓✓</td><td>✓✓</td><td>✓✓</td></tr>
-                            <tr><td><strong>Cuticole</strong></td><td>−</td><td>✓✓</td><td>−</td><td>✓</td><td>−</td></tr>
-                            <tr><td><strong>Ber-EP4</strong></td><td><span class="badge badge-success">✓✓</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td></tr>
-                            <tr><td><strong>CEA</strong></td><td>−</td><td>✓</td><td>✓✓</td><td>✓</td><td>✓</td></tr>
-                            <tr><td><strong>CK7</strong></td><td>−</td><td>✓</td><td>✓✓</td><td>✓✓</td><td>✓✓</td></tr>
-                            <tr><td><strong>p63 diffuso</strong></td><td>✓✓</td><td>−</td><td>+/−</td><td>+/−</td><td>−</td></tr>
+                            <tr><td><strong>Palizzata periferica</strong></td><td>✓✓</td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td></tr>
+                            <tr><td><strong>Retrazione stromale</strong></td><td>✓✓</td><td>−</td><td>−</td><td>+/−</td><td>−</td><td>−</td></tr>
+                            <tr><td><strong>Strutture duttali</strong></td><td>−</td><td>✓</td><td>✓✓</td><td>✓✓</td><td>✓✓</td><td>−</td></tr>
+                            <tr><td><strong>Microcisti + infiltrazione</strong></td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>✓✓</td></tr>
+                            <tr><td><strong>Stroma desmoplastico</strong></td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>✓✓</td></tr>
+                            <tr><td><strong>Invasione perineurale</strong></td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>✓ (50-80%)</td></tr>
+                            <tr><td><strong>Cuticole</strong></td><td>−</td><td>✓✓</td><td>−</td><td>✓</td><td>−</td><td>−</td></tr>
+                            <tr><td><strong>Ber-EP4</strong></td><td><span class="badge badge-success">✓✓</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td></tr>
+                            <tr><td><strong>CK7</strong></td><td>−</td><td>✓</td><td>✓✓</td><td>✓✓</td><td>✓✓</td><td>✓✓</td></tr>
+                            <tr><td><strong>CEA</strong></td><td>−</td><td>✓</td><td>✓✓</td><td>✓</td><td>✓</td><td>✓ (focale)</td></tr>
+                            <tr><td><strong>p63 diffuso</strong></td><td>✓✓</td><td>−</td><td>+/−</td><td>+/−</td><td>−</td><td>+/− (variabile)</td></tr>
                         </tbody>
                     </table>
                     <h3>💡 TAKE HOME MESSAGES:</h3>
                     <ul>
-                        <li><strong>Presenza strutture duttali = STOP! Non è BCC!</strong></li>
-                        <li><strong>Ber-EP4 negativo in tutte le lesioni eccrine</strong></li>
-                        <li><strong>CK7 + CEA positivi = differenziazione eccrina</strong></li>
+                        <li><strong>Presenza strutture duttali CHIARE = LESIONE ECCRINA (NON BCC)</strong></li>
+                        <li><strong>ASSENZA duttali + CK7+/Ber-EP4− + infiltrazione profonda = CONSIDER MAC!</strong></li>
+                        <li><strong>Ber-EP4 NEGATIVO in TUTTE le lesioni eccrine E in MAC</strong></li>
+                        <li><strong>CK7 + CEA positivi = differenziazione eccrina (ma controlla duttali)</strong></li>
                         <li><strong>Retrazione stromale + palizzata = signature BCC</strong></li>
-                        <li><strong>In dubbio: pannello IHC risolve 99% dei casi!</strong></li>
+                        <li><strong>MAC: cercare SEMPRE invasione perineurale con S100!</strong></li>
+                        <li><strong>In dubbio: pannello IHC + controllo morfologia risolve 99% dei casi!</strong></li>
                     </ul>
                 </div>
             </div>
 
-            <!-- MAC -->
+            <!-- MAC EXPANDED -->
             <div class="section">
                 <div class="section-header" onclick="toggleSection('mac')">
                     <span>🚨 CARCINOMA ANNESSIALE MICROCISTICO (MAC)</span>
                     <span class="toggle-icon" id="mac-icon">▼</span>
                 </div>
                 <div class="section-content" id="mac-content">
-                    <div class="alert alert-danger"><strong>⚠️ "Il lupo travestito da agnello":</strong> Morfologia BLAND + infiltrazione PROFONDA = MAC!</div>
+                    <div class="alert alert-danger"><strong>⚠️ "Il lupo travestito da agnello":</strong> Morfologia BLAND + infiltrazione PROFONDA + ASSENZA duttali = MAC!</div>
                     <h3>🔬 Features diagnostiche chiave:</h3>
                     <div class="variant-card high-risk">
                         <h4>Morfologia "a doppio livello":</h4>
                         <ul>
-                            <li><strong>Derma superficiale:</strong> Aspetto "rassicurante" (siringoma-like)</li>
-                            <li><strong>Derma profondo/sottocute:</strong> Piccoli dotti e corde infiltranti</li>
-                            <li><strong>Microcisti</strong> con materiale cheratinico</li>
-                            <li><strong>Stroma desmoplastico</strong> prominente</li>
+                            <li><strong>Derma superficiale:</strong> Aspetto "rassicurante" (siringoma-like) — TRAPPOLA!</li>
+                            <li><strong>Derma profondo/sottocute:</strong> Piccoli dotti e corde infiltranti in profondità</li>
+                            <li><strong>Microcisti</strong> con materiale cheratinico — aspetto innocente ma infiltrante</li>
+                            <li><strong>Stroma desmoplastico</strong> prominente attorno ai dotti</li>
                             <li><strong>⚠️ Invasione perineurale (50-80%)</strong> - SEMPRE cercare con S100!</li>
+                            <li><strong>Cellularità bassa, mitosi rare</strong> — ma comunque aggressivo (confonde il referto)</li>
                         </ul>
                     </div>
-                    <h3>🧪 IHC Diagnostica:</h3>
+                    <h3>🧪 IHC Diagnostica per MAC:</h3>
                     <table>
-                        <thead><tr><th>Marker</th><th>MAC</th><th>Note</th></tr></thead>
+                        <thead><tr><th>Marker</th><th>MAC</th><th>Note Critiche</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>CK7</strong></td><td><span class="badge badge-success">✓✓ Diffuso</span></td><td>Marker chiave!</td></tr>
-                            <tr><td><strong>Ber-EP4</strong></td><td><span class="badge badge-danger">⚠️ NEGATIVO</span></td><td>Discrimina da BCC!</td></tr>
-                            <tr><td><strong>CEA</strong></td><td><span class="badge badge-warning">✓ focale</span></td><td>Componente duttale</td></tr>
-                            <tr><td><strong>p63</strong></td><td><span class="badge badge-warning">✓ variabile</span></td><td>Meno diffuso che in BCC</td></tr>
-                            <tr><td><strong>Ki67</strong></td><td><span class="badge badge-info">&lt;10%</span></td><td>Contrasta con aspetto infiltrativo</td></tr>
-                            <tr><td><strong>S100</strong></td><td><span class="badge badge-danger">✓</span></td><td>Per evidenziare invasione perineurale</td></tr>
+                            <tr><td><strong>CK7</strong></td><td><span class="badge badge-success">✓✓ Diffuso</span></td><td>Marker chiave! Positività in sistema duttale infiltrante</td></tr>
+                            <tr><td><strong>Ber-EP4</strong></td><td><span class="badge badge-danger">⚠️ NEGATIVO</span></td><td>DISCRIMINA da BCC! Se Ber-EP4+ → NON è MAC</td></tr>
+                            <tr><td><strong>CEA</strong></td><td><span class="badge badge-warning">✓ focale</span></td><td>Componente duttale, meno diffuso che in poroma/spiroadenoma</td></tr>
+                            <tr><td><strong>p63</strong></td><td><span class="badge badge-warning">✓ variabile</span></td><td>Presente ma meno diffuso che in BCC. Cercare in cellule periferiche</td></tr>
+                            <tr><td><strong>Ki67</strong></td><td><span class="badge badge-info">&lt;10%</span></td><td>Basso indice mitotico CONTRASTA con aspetto infiltrativo (trabocco!)</td></tr>
+                            <tr><td><strong>S100</strong></td><td><span class="badge badge-danger">✓✓ ESSENZIALE</span></td><td>SEMPRE richiedere! Evidenzia invasione perineurale (50-80% dei casi)</td></tr>
                         </tbody>
                     </table>
-                    <h3>⚠️ Management:</h3>
+                    <h3>⚠️ Management e Prognosi:</h3>
                     <div class="result-box danger">
+                        <strong>Recidiva locale: 40-60% se margini inadeguati</strong><br><br>
                         <ul>
-                            <li><strong>Mohs surgery = GOLD STANDARD</strong></li>
-                            <li>Margini convenzionali: ≥10mm (recidive comunque frequenti)</li>
-                            <li>Follow-up stretto: ogni 3-6 mesi × 5 anni</li>
-                            <li>Imaging se invasione profonda/perineurale</li>
-                            <li><strong>Recidiva locale: 40-60%</strong> (margini inadeguati)</li>
+                            <li><strong>Mohs surgery = GOLD STANDARD</strong> — margini istologici monitorati real-time</li>
+                            <li><strong>Margini chirurgici convenzionali:</strong> ≥10mm (ma ricorrenze comunque frequenti: 15-20%)</li>
+                            <li><strong>Follow-up intensivo:</strong> ogni 3-6 mesi × 5 anni (non è curativo in senso tradizionale)</li>
+                            <li><strong>Imaging pre-operatorio se:</strong> invasione profonda/perineurale, localizzazione zona H, >2cm</li>
+                            <li><strong>Consulenza multidisciplinare:</strong> considerare dermatochirurgia/chirurgia plastica</li>
                         </ul>
                     </div>
-                    <h3>🚨 PITFALLS:</h3>
+                    <h3>🚨 PITFALLS COMUNI:</h3>
                     <div class="alert alert-warning">
                         <ol>
-                            <li><strong>Biopsia superficiale</strong> → aspetto benigno misconosciuto</li>
-                            <li><strong>Bassa cellularità + mitosi rare</strong> → falso senso di benignità</li>
-                            <li><strong>Non cercare invasione perineurale</strong> → miss prognostico</li>
-                            <li><strong>Margini inadeguati</strong> → recidive garantite</li>
+                            <li><strong>Biopsia superficiale:</strong> aspetto benigno misconosciuto (biopsia ristretta a derma superficiale)</li>
+                            <li><strong>Bassa cellularità + mitosi rare:</strong> falso senso di benignità — MAC è indolente in aspetto</li>
+                            <li><strong>Confondere con siringoma:</strong> MAC può simulare siringoma nella porzione superficiale</li>
+                            <li><strong>Non cercare invasione perineurale:</strong> miss prognostico grave (S100 essenziale!)</li>
+                            <li><strong>Margini inadeguati:</strong> garantiscono recidive anche dopo Mohs parziale</li>
+                            <li><strong>Non richiedere CK7+Ber-EP4 panel:</strong> diagnosi ritardata</li>
                         </ol>
                     </div>
                 </div>
@@ -310,11 +320,12 @@
                             <li><strong>Minagawa A, Koga H.</strong> Diagnostic immunohistochemistry for cutaneous adnexal tumors. <em>J Dermatol</em> 2014;41:305-314.</li>
                             <li><strong>Ivan D, Diwan AH, Prieto VG.</strong> Expression of p63 in primary cutaneous adnexal neoplasms and adenocarcinoma metastatic to the skin. <em>Mod Pathol</em> 2005;18:137-142.</li>
                         </ol>
-                        <h3>🚨 Carcinoma Annessiale Microcistico:</h3>
+                        <h3>🚨 Carcinoma Annessiale Microcistico (MAC):</h3>
                         <ol start="18">
                             <li><strong>Goldstein DJ, Barr RJ, Santa Cruz DJ.</strong> Microcystic adnexal carcinoma: a distinct clinicopathologic entity. <em>Cancer</em> 1982;50:566-572. ⭐ <em>(Descrizione originale)</em></li>
                             <li><strong>Chiller K, Passaro D, Scheuller M, et al.</strong> Microcystic adnexal carcinoma: forty-eight cases, their treatment, and their outcome. <em>Arch Dermatol</em> 2000;136:1355-1359.</li>
-                            <li><strong>Leibovitch I, Huilgol SC, Selva D, et al.</strong> Microcystic adnexal carcinoma: treatment with Mohs micrographic surgery. <em>J Am Acad Dermatol</em> 2005;52:295-300.</li>
+                            <li><strong>Leibovitch I, Huilgol SC, Selva D, et al.</strong> Microcystic adnexal carcinoma: treatment with Mohs micrographic surgery. <em>J Am Acad Dermatol</em> 2005;52:295-300. ⭐</li>
+                            <li><strong>Zalla MJ, Lipncik BC, Mohs FE.</strong> Microcystic adnexal carcinoma: a mohs micrographic surgery series. <em>Dermatol Surg</em> 2005;31:1386-1391.</li>
                         </ol>
                     </div>
                 </div>
@@ -322,7 +333,7 @@
         </div>
 
         <footer>
-            <p>🔬 Tool Diagnostico Lesioni Basaloidi v15.0 Enhanced</p>
+            <p>🔬 Tool Diagnostico Lesioni Basaloidi v15.1 Fixed</p>
             <p>Evidence-Based • 2025 • Sviluppato da <a href="https://github.com/Infingardo" target="_blank">@Infingardo</a></p>
             <p style="font-size: 0.8em; margin-top: 10px; opacity: 0.8;">Per uso educazionale. Non sostituisce giudizio clinico.</p>
         </footer>
@@ -378,8 +389,12 @@
                 resultDiv.innerHTML = `<div class="result-box success"><h3>✅ PATTERN IHC DIAGNOSTICO PER BCC</h3><p><strong>Ber-EP4+ / p63+ diffuso</strong></p><p>Profile immunofenotipico classico di carcinoma basocellulare.</p>${bcl2 ? '<p><span class="badge badge-info">Bcl-2+</span> supporta la diagnosi</p>' : ''}</div>`;
             } else if (!berep4 && p63 && (cd10 || cd34)) {
                 resultDiv.innerHTML = `<div class="result-box warning"><h3>⚠️ PATTERN SUGGESTIVO PER TRICOBLASTOMA</h3><p><strong>Ber-EP4− / p63+ / CD10+/CD34+</strong></p><p>Differenziazione follicolare. Correlazione morfologica essenziale.</p><p><strong>DD:</strong> Trichoepithelioma se piccolo e simmetrico</p></div>`;
+            } else if (ck7 && cea && !berep4 && p63) {
+                resultDiv.innerHTML = `<div class="result-box warning"><h3>⚠️ CK7+/CEA+/Ber-EP4− = VALUTARE ATTENTAMENTE</h3><p><strong>Se duttali morfologicamente presenti:</strong> LESIONE ECCRINA (Poroma/Spiroadenoma/Siringoma/Idroadenoma)</p><p><strong>Se duttali ASSENTI + infiltrazione profonda + p63 variabile:</strong> STRONGLY CONSIDER MAC!</p><p><strong>Ricordare:</strong> MAC può sembrare innocente superficialmente ma infiltra profondamente</p></div>`;
+            } else if (ck7 && !berep4 && !cea && p63) {
+                resultDiv.innerHTML = `<div class="result-box danger"><h3>🚨 CK7+ BER-EP4− SENZA CEA = MAC CANDIDATE!</h3><p><strong>Pattern altamente suggestivo per MAC se assenti duttali morfologici</strong></p><p>MAC è CK7+ per differenziazione eccrina ma senza pattern chiaro di cuticole/strutture duttali</p><p><strong>AZIONI ESSENZIALI:</strong></p><ul><li>Controllare S100 per invasione perineurale</li><li>Valutare infiltrazione profonda/desmoplasia stromale</li><li>Consultare per Mohs surgery</li></ul></div>`;
             } else if (ck7 && cea && !berep4) {
-                resultDiv.innerHTML = `<div class="result-box warning"><h3>💧 PATTERN SUGGESTIVO PER LESIONE ECCRINA</h3><p><strong>CK7+ / CEA+ / Ber-EP4−</strong></p><p>Differenziazione eccrina/duttale.</p><p><strong>DD:</strong> Poroma, Spiroadenoma, Siringoma, Idroadenoma</p><p><strong>Se infiltrazione profonda + stroma desmoplastico: considerare MAC!</strong></p></div>`;
+                resultDiv.innerHTML = `<div class="result-box warning"><h3>💧 PATTERN SUGGESTIVO PER LESIONE ECCRINA</h3><p><strong>CK7+ / CEA+ / Ber-EP4−</strong></p><p>Differenziazione eccrina/duttale.</p><p><strong>DD:</strong> Poroma, Spiroadenoma, Siringoma, Idroadenoma</p><p><strong>⚠️ Se NO duttali morfologici + infiltrazione profonda: considerare MAC!</strong></p></div>`;
             } else {
                 resultDiv.innerHTML = `<div class="result-box"><h3>📊 PATTERN IHC NON CONCLUSIVO</h3><p>Profile immunofenotipico atipico. Completare panel e rivalutare morfologia.</p></div>`;
             }
