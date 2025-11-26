@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tool Diagnostico Lesioni Basaloidi - v15.1 Fixed</title>
+    <title>Tool Diagnostico Lesioni Basaloidi - v15.2 Bibliografia Cliccabile</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; min-height: 100vh; }
@@ -50,6 +50,8 @@
         .toggle-icon.rotated { transform: rotate(180deg); }
         .flowchart-container { background: white; padding: 30px; border-radius: 10px; margin: 20px 0; overflow-x: auto; }
         mark { background: #ffeb3b; padding: 2px 4px; border-radius: 3px; }
+        .bib-link { color: #667eea; text-decoration: none; font-weight: bold; margin: 0 5px; font-size: 0.95em; padding: 2px 8px; background: #f0f4ff; border-radius: 4px; transition: all 0.2s; display: inline-block; }
+        .bib-link:hover { text-decoration: underline; color: #764ba2; background: #e0e8ff; transform: translateY(-1px); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         @media (max-width: 768px) { 
             .checkbox-group { grid-template-columns: 1fr; } 
             header h1 { font-size: 1.5em; } 
@@ -61,7 +63,7 @@
     <div class="container">
         <header>
             <h1>🔬 Tool Diagnostico Lesioni Basaloidi</h1>
-            <p>Evidence-Based • v15.1 Fixed • 2025</p>
+            <p>Evidence-Based • v15.2 Bibliografia Cliccabile • 2025</p>
         </header>
 
         <div class="content">
@@ -290,50 +292,113 @@
                     <div style="font-size: 0.9em; line-height: 1.8;">
                         <h3>🔬 Morfologia & Istologia BCC:</h3>
                         <ol>
-                            <li><strong>Sexton M, Jones DB, Maloney ME.</strong> Histologic pattern analysis of basal cell carcinoma. Study of a series of 1039 consecutive neoplasms. <em>J Am Acad Dermatol</em> 1990;23:1118-1126.</li>
-                            <li><strong>Crowson AN.</strong> Basal cell carcinoma: biology, morphology and clinical implications. <em>Mod Pathol</em> 2006;19:S127-S147. ⭐</li>
-                            <li><strong>Rowe DE, Carroll RJ, Day CL Jr.</strong> Prognostic factors for local recurrence, metastasis, and survival rates in squamous cell carcinoma of the skin, ear, and lip. <em>J Am Acad Dermatol</em> 1992;26:976-990.</li>
+                            <li><strong>Sexton M, Jones DB, Maloney ME.</strong> Histologic pattern analysis of basal cell carcinoma. Study of a series of 1039 consecutive neoplasms. <em>J Am Acad Dermatol</em> 1990;23:1118-1126. 
+                                <a href="https://doi.org/10.1016/0190-9622(90)70344-h" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/2273112/" target="_blank" class="bib-link">PMID: 2273112</a>
+                            </li>
+                            <li><strong>Crowson AN.</strong> Basal cell carcinoma: biology, morphology and clinical implications. <em>Mod Pathol</em> 2006;19:S127-S147. ⭐ 
+                                <a href="https://doi.org/10.1038/modpathol.3800512" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/16446711/" target="_blank" class="bib-link">PMID: 16446711</a>
+                            </li>
+                            <li><strong>Rowe DE, Carroll RJ, Day CL Jr.</strong> Prognostic factors for local recurrence, metastasis, and survival rates in squamous cell carcinoma of the skin, ear, and lip. <em>J Am Acad Dermatol</em> 1992;26:976-990.
+                                <a href="https://doi.org/10.1016/0190-9622(92)70145-7" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/1607418/" target="_blank" class="bib-link">PMID: 1607418</a>
+                            </li>
                         </ol>
                         <h3>🧪 Immunoistochimica:</h3>
                         <ol start="4">
-                            <li><strong>Kanitakis J.</strong> Anatomy, histology and immunohistochemistry of normal human skin. <em>Eur J Dermatol</em> 2002;12:390-401.</li>
-                            <li><strong>Jih DM, Lyle S, Elenitsas R, et al.</strong> Cytokeratin 15 expression in trichoepitheliomas and a subset of basal cell carcinomas suggests they originate from hair follicle stem cells. <em>J Cutan Pathol</em> 1999;26:113-118.</li>
-                            <li><strong>Poblet E, Jiménez-Acosta F, Rocamora A.</strong> QBEND/10 (anti-CD34 antibody) in external root sheath cells and basal cell carcinoma. <em>J Cutan Pathol</em> 1994;21:224-228.</li>
-                            <li><strong>Beer TW, Shepherd P, Theaker JM.</strong> Ber-EP4 and epithelial membrane antigen aid distinction of basal cell, squamous cell and basosquamous carcinomas of the skin. <em>Histopathology</em> 2000;37:218-223. ⭐</li>
+                            <li><strong>Kanitakis J.</strong> Anatomy, histology and immunohistochemistry of normal human skin. <em>Eur J Dermatol</em> 2002;12:390-401.
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/12095893/" target="_blank" class="bib-link">PMID: 12095893</a>
+                            </li>
+                            <li><strong>Jih DM, Lyle S, Elenitsas R, et al.</strong> Cytokeratin 15 expression in trichoepitheliomas and a subset of basal cell carcinomas suggests they originate from hair follicle stem cells. <em>J Cutan Pathol</em> 1999;26:113-118.
+                                <a href="https://doi.org/10.1111/j.1600-0560.1999.tb01814.x" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/10235378/" target="_blank" class="bib-link">PMID: 10235378</a>
+                            </li>
+                            <li><strong>Poblet E, Jiménez-Acosta F, Rocamora A.</strong> QBEND/10 (anti-CD34 antibody) in external root sheath cells and basal cell carcinoma. <em>J Cutan Pathol</em> 1994;21:224-228.
+                                <a href="https://doi.org/10.1111/j.1600-0560.1994.tb00269.x" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/7521506/" target="_blank" class="bib-link">PMID: 7521506</a>
+                            </li>
+                            <li><strong>Beer TW, Shepherd P, Theaker JM.</strong> Ber-EP4 and epithelial membrane antigen aid distinction of basal cell, squamous cell and basosquamous carcinomas of the skin. <em>Histopathology</em> 2000;37:218-223. ⭐ 
+                                <a href="https://doi.org/10.1046/j.1365-2559.2000.00999.x" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/10971697/" target="_blank" class="bib-link">PMID: 10971697</a>
+                            </li>
                         </ol>
                         <h3>⚠️ Varianti BCC & Management:</h3>
                         <ol start="8">
-                            <li><strong>NCCN Clinical Practice Guidelines in Oncology: Basal Cell Skin Cancer.</strong> Version 1.2024. ⭐⭐</li>
-                            <li><strong>Bichakjian CK, Olencki T, Aasi SZ, et al.</strong> Basal Cell Skin Cancer, Version 1.2016, NCCN Clinical Practice Guidelines in Oncology. <em>J Natl Compr Canc Netw</em> 2016;14:574-597.</li>
-                            <li><strong>Leibovitch I, Huilgol SC, Selva D, et al.</strong> Basal cell carcinoma treated with Mohs surgery in Australia II. Outcome at 5-year follow-up. <em>J Am Acad Dermatol</em> 2005;53:452-457.</li>
+                            <li><strong>NCCN Clinical Practice Guidelines in Oncology: Basal Cell Skin Cancer.</strong> Version 1.2024. ⭐⭐ 
+                                <a href="https://www.nccn.org/guidelines/guidelines-detail?category=1&id=1416" target="_blank" class="bib-link">Link NCCN</a>
+                            </li>
+                            <li><strong>Bichakjian CK, Olencki T, Aasi SZ, et al.</strong> Basal Cell Skin Cancer, Version 1.2016, NCCN Clinical Practice Guidelines in Oncology. <em>J Natl Compr Canc Netw</em> 2016;14:574-597.
+                                <a href="https://doi.org/10.6004/jnccn.2016.0065" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/27160235/" target="_blank" class="bib-link">PMID: 27160235</a>
+                            </li>
+                            <li><strong>Leibovitch I, Huilgol SC, Selva D, et al.</strong> Basal cell carcinoma treated with Mohs surgery in Australia II. Outcome at 5-year follow-up. <em>J Am Acad Dermatol</em> 2005;53:452-457.
+                                <a href="https://doi.org/10.1016/j.jaad.2005.04.087" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/16112352/" target="_blank" class="bib-link">PMID: 16112352</a>
+                            </li>
                         </ol>
                         <h3>🔄 DD Tricoblastoma/Trichoepithelioma:</h3>
                         <ol start="11">
-                            <li><strong>Brooke JD.</strong> Epithelioma adenoides cysticum. <em>Br J Dermatol</em> 1892;4:269-287.</li>
-                            <li><strong>Schulz T, Hartschuh W.</strong> Folliculo-sebaceous cystic hamartoma is a trichofolliculoma at its very late stage. <em>J Cutan Pathol</em> 1998;25:354-364.</li>
-                            <li><strong>Misago N, Suse T, Uemura T, Narisawa Y.</strong> Basal cell carcinoma with ductal and glandular differentiation. <em>Am J Dermatopathol</em> 2004;26:374-382.</li>
+                            <li><strong>Brooke JD.</strong> Epithelioma adenoides cysticum. <em>Br J Dermatol</em> 1892;4:269-287.
+                                <a href="https://doi.org/10.1111/j.1365-2133.1892.tb15899.x" target="_blank" class="bib-link">DOI</a>
+                            </li>
+                            <li><strong>Schulz T, Hartschuh W.</strong> Folliculo-sebaceous cystic hamartoma is a trichofolliculoma at its very late stage. <em>J Cutan Pathol</em> 1998;25:354-364.
+                                <a href="https://doi.org/10.1111/j.1600-0560.1998.tb01739.x" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/9740553/" target="_blank" class="bib-link">PMID: 9740553</a>
+                            </li>
+                            <li><strong>Misago N, Suse T, Uemura T, Narisawa Y.</strong> Basal cell carcinoma with ductal and glandular differentiation. <em>Am J Dermatopathol</em> 2004;26:374-382.
+                                <a href="https://doi.org/10.1097/00000372-200410000-00003" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/15365365/" target="_blank" class="bib-link">PMID: 15365365</a>
+                            </li>
                         </ol>
                         <h3>💧 Lesioni Eccrine/Poromatose:</h3>
                         <ol start="14">
-                            <li><strong>Berman A, Winkelmann RK.</strong> Porocarcinoma and syringoid eccrine carcinoma. <em>Arch Dermatol</em> 1982;118:250-251.</li>
-                            <li><strong>Plaza JA, Ortega PF, Stockman DL, Suster S.</strong> Value of p63 and podoplanin (D2-40) immunoreactivity in the distinction between primary cutaneous tumors and adenocarcinomas metastatic to the skin. <em>Am J Dermatopathol</em> 2011;33:334-341.</li>
-                            <li><strong>Minagawa A, Koga H.</strong> Diagnostic immunohistochemistry for cutaneous adnexal tumors. <em>J Dermatol</em> 2014;41:305-314.</li>
-                            <li><strong>Ivan D, Diwan AH, Prieto VG.</strong> Expression of p63 in primary cutaneous adnexal neoplasms and adenocarcinoma metastatic to the skin. <em>Mod Pathol</em> 2005;18:137-142.</li>
+                            <li><strong>Berman A, Winkelmann RK.</strong> Porocarcinoma and syringoid eccrine carcinoma. <em>Arch Dermatol</em> 1982;118:250-251.
+                                <a href="https://doi.org/10.1001/archderm.1982.01650160040015" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/7065653/" target="_blank" class="bib-link">PMID: 7065653</a>
+                            </li>
+                            <li><strong>Plaza JA, Ortega PF, Stockman DL, Suster S.</strong> Value of p63 and podoplanin (D2-40) immunoreactivity in the distinction between primary cutaneous tumors and adenocarcinomas metastatic to the skin. <em>Am J Dermatopathol</em> 2011;33:334-341.
+                                <a href="https://doi.org/10.1097/DAD.0b013e3181f92a0f" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/20520556/" target="_blank" class="bib-link">PMID: 20520556</a>
+                            </li>
+                            <li><strong>Minagawa A, Koga H.</strong> Diagnostic immunohistochemistry for cutaneous adnexal tumors. <em>J Dermatol</em> 2014;41:305-314.
+                                <a href="https://doi.org/10.1111/1346-8138.12367" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/24635013/" target="_blank" class="bib-link">PMID: 24635013</a>
+                            </li>
+                            <li><strong>Ivan D, Diwan AH, Prieto VG.</strong> Expression of p63 in primary cutaneous adnexal neoplasms and adenocarcinoma metastatic to the skin. <em>Mod Pathol</em> 2005;18:137-142.
+                                <a href="https://doi.org/10.1038/modpathol.3800270" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/15467711/" target="_blank" class="bib-link">PMID: 15467711</a>
+                            </li>
                         </ol>
                         <h3>🚨 Carcinoma Annessiale Microcistico (MAC):</h3>
                         <ol start="18">
-                            <li><strong>Goldstein DJ, Barr RJ, Santa Cruz DJ.</strong> Microcystic adnexal carcinoma: a distinct clinicopathologic entity. <em>Cancer</em> 1982;50:566-572. ⭐ <em>(Descrizione originale)</em></li>
-                            <li><strong>Chiller K, Passaro D, Scheuller M, et al.</strong> Microcystic adnexal carcinoma: forty-eight cases, their treatment, and their outcome. <em>Arch Dermatol</em> 2000;136:1355-1359.</li>
-                            <li><strong>Leibovitch I, Huilgol SC, Selva D, et al.</strong> Microcystic adnexal carcinoma: treatment with Mohs micrographic surgery. <em>J Am Acad Dermatol</em> 2005;52:295-300. ⭐</li>
-                            <li><strong>Zalla MJ, Lipncik BC, Mohs FE.</strong> Microcystic adnexal carcinoma: a mohs micrographic surgery series. <em>Dermatol Surg</em> 2005;31:1386-1391.</li>
+                            <li><strong>Goldstein DJ, Barr RJ, Santa Cruz DJ.</strong> Microcystic adnexal carcinoma: a distinct clinicopathologic entity. <em>Cancer</em> 1982;50:566-572. ⭐ <em>(Descrizione originale)</em> 
+                                <a href="https://doi.org/10.1002/1097-0142(19820801)50:3<566::aid-cncr2820500330>3.0.co;2-q" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/7093897/" target="_blank" class="bib-link">PMID: 7093897</a>
+                            </li>
+                            <li><strong>Chiller K, Passaro D, Scheuller M, et al.</strong> Microcystic adnexal carcinoma: forty-eight cases, their treatment, and their outcome. <em>Arch Dermatol</em> 2000;136:1355-1359.
+                                <a href="https://doi.org/10.1001/archderm.136.11.1355" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/11074699/" target="_blank" class="bib-link">PMID: 11074699</a>
+                            </li>
+                            <li><strong>Leibovitch I, Huilgol SC, Selva D, et al.</strong> Microcystic adnexal carcinoma: treatment with Mohs micrographic surgery. <em>J Am Acad Dermatol</em> 2005;52:295-300. ⭐ 
+                                <a href="https://doi.org/10.1016/j.jaad.2004.10.868" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/15692477/" target="_blank" class="bib-link">PMID: 15692477</a>
+                            </li>
+                            <li><strong>Zalla MJ, Lipncik BC, Mohs FE.</strong> Microcystic adnexal carcinoma: a mohs micrographic surgery series. <em>Dermatol Surg</em> 2005;31:1386-1391.
+                                <a href="https://doi.org/10.1111/j.1524-4725.2005.31230" target="_blank" class="bib-link">DOI</a> | 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/16188198/" target="_blank" class="bib-link">PMID: 16188198</a>
+                            </li>
                         </ol>
+                        <div class="alert alert-info" style="margin-top: 20px;">
+                            <strong>💡 Link sempre aggiornati:</strong> DOI (Digital Object Identifier) e PMID (PubMed ID) garantiscono accesso diretto alle pubblicazioni originali.
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <footer>
-            <p>🔬 Tool Diagnostico Lesioni Basaloidi v15.1 Fixed</p>
+            <p>🔬 Tool Diagnostico Lesioni Basaloidi v15.2 Bibliografia Cliccabile</p>
             <p>Evidence-Based • 2025 • Sviluppato da <a href="https://github.com/Infingardo" target="_blank">@Infingardo</a></p>
             <p style="font-size: 0.8em; margin-top: 10px; opacity: 0.8;">Per uso educazionale. Non sostituisce giudizio clinico.</p>
         </footer>
