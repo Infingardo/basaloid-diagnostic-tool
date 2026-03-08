@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tool Diagnostico Lesioni Basaloidi - v15.6</title>
+    <title>Tool Diagnostico Lesioni Basaloidi - v16.1</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; min-height: 100vh; }
@@ -58,11 +58,40 @@
         .bib-link { color: #667eea; text-decoration: none; font-weight: bold; margin: 0 5px; font-size: 0.95em; padding: 2px 8px; background: #f0f4ff; border-radius: 4px; transition: all 0.2s; display: inline-block; }
         .bib-link:hover { text-decoration: underline; color: #764ba2; background: #e0e8ff; transform: translateY(-1px); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .disclaimer { font-size: 0.85em; color: #6c757d; font-style: italic; margin-top: 10px; padding: 8px 12px; background: #f8f9fa; border-radius: 5px; border-left: 3px solid #6c757d; }
-        /* v15.5: IHC intensity selector */
+        /* IHC intensity selector */
         .ihc-row { display: flex; align-items: center; padding: 10px 12px; background: #f8f9fa; border-radius: 8px; gap: 10px; }
         .ihc-row label { flex: 1; cursor: pointer; font-size: 0.95em; }
         .ihc-row select { padding: 4px 8px; border-radius: 5px; border: 1px solid #ccc; font-size: 0.85em; background: white; }
         .ihc-group-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; margin: 15px 0; }
+        .ancillary-group { background: #f0f0f0; border-radius: 8px; padding: 10px 15px; margin: 10px 0; }
+        .ancillary-group .group-label { font-size: 0.8em; color: #6c757d; font-style: italic; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        /* Pulsante Nuovo caso */
+        .btn-reset-all {
+            display: block;
+            width: calc(100% - 60px);
+            margin: 20px 30px 0 30px;
+            padding: 16px 30px;
+            background: linear-gradient(135deg, #dc3545 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-align: center;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(220,53,69,0.3);
+        }
+        .btn-reset-all:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220,53,69,0.45);
+        }
+        .btn-reset-all:active {
+            transform: translateY(0);
+        }
+
         @media (max-width: 768px) { 
             .checkbox-group { grid-template-columns: 1fr; } 
             .ihc-group-grid { grid-template-columns: 1fr; }
@@ -75,18 +104,23 @@
     <div class="container">
         <header>
             <h1>🔬 Tool Diagnostico Lesioni Basaloidi</h1>
-            <p>Evidence-Based • v15.6 • 2026</p>
-            <p style="font-size:0.8em; opacity:0.8; margin-top:5px;">Fix: Score morfologico riequilibrato | Zona H+MAC alert | Ber-EP4 focale/infiltrativo | p63/CK5/6 MAC wording | Margini MAC aggiornati</p>
+            <p>Evidence-Based • v16.1 • 2026</p>
+            <p style="font-size:0.8em; opacity:0.8; margin-top:5px;">v16.1: Gerarchia rami JS corretta (eccrineCandidate → MACcandidate → indeterminato) | CK7 rimosso dal gate MAC (hasMACMorph unico trigger) | RAMO 3 per Ber-EP4−/CK7+ senza morfologia | CK7 tabella grande uniformata ~15% Hoang</p>
         </header>
+
+        <!-- PULSANTE NUOVO CASO -->
+        <button class="btn-reset-all" onclick="resetAll()">
+            🔄 Nuovo caso — azzera tutto
+        </button>
 
         <div class="content">
 
             <!-- ============================================================ -->
-            <!-- CLINICAL INPUT -->
+            <!-- DATI CLINICI -->
             <!-- ============================================================ -->
             <div class="section">
                 <div class="section-header" onclick="toggleSection('clinical')">
-                    <span>📋 INPUT CLINICO (obbligatorio per accuratezza)</span>
+                    <span>📋 DATI CLINICI (obbligatorio per accuratezza)</span>
                     <span class="toggle-icon" id="clinical-icon">▼</span>
                 </div>
                 <div class="section-content active" id="clinical-content">
@@ -129,7 +163,7 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- FLOWCHART -->
+            <!-- ALGORITMO -->
             <!-- ============================================================ -->
             <div class="section">
                 <div class="section-header" onclick="toggleSection('flowchart')">
@@ -146,8 +180,8 @@
                             <line x1="450" y1="80" x2="450" y2="120" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
                             <g>
                                 <rect x="300" y="120" width="300" height="70" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/>
-                                <text x="450" y="145" text-anchor="middle" font-weight="bold" font-size="13">Pattern BCC-like?</text>
-                                <text x="450" y="163" text-anchor="middle" font-size="10">(palizzata + retrazione/clefting)</text>
+                                <text x="450" y="145" text-anchor="middle" font-weight="bold" font-size="13">Aspetto BCC-simile?</text>
+                                <text x="450" y="163" text-anchor="middle" font-size="10">(palizzata + retrazione/distacco artefattuale)</text>
                                 <text x="450" y="179" text-anchor="middle" font-size="9" fill="#666">⚠️ Valutabile anche su shave, ma non esclude MAC infiltrativo profondo</text>
                             </g>
                             <line x1="350" y1="190" x2="200" y2="240" stroke="#28a745" stroke-width="3" marker-end="url(#arrowhead)"/><text x="250" y="210" fill="#28a745" font-weight="bold">SÌ</text>
@@ -156,7 +190,7 @@
                                 <rect x="80" y="240" width="240" height="70" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/>
                                 <text x="200" y="265" text-anchor="middle" font-weight="bold" font-size="13">Ber-EP4 positivo</text>
                                 <text x="200" y="283" text-anchor="middle" font-size="10">diffuso o focale?</text>
-                                <text x="200" y="299" text-anchor="middle" font-size="9" fill="#666">(scegli intensità nel panel IHC)</text>
+                                <text x="200" y="299" text-anchor="middle" font-size="9" fill="#666">(scegli intensità nel pannello IHC)</text>
                             </g>
                             <line x1="200" y1="310" x2="200" y2="350" stroke="#28a745" stroke-width="3" marker-end="url(#arrowhead)"/><text x="215" y="335" fill="#28a745" font-weight="bold">SÌ</text>
                             <g onclick="alert('✅ BCC fortemente suggestivo!\nSe piccolo/simmetrico + Ber-EP4 solo focale: DD trichoepithelioma.\nSe EMA+ focale: valuta basosquamoso.')">
@@ -183,7 +217,7 @@
                                 <text x="120" y="680" text-anchor="middle" fill="white" font-size="8">nei trichoepitheliomi (raro)</text>
                             </g>
                             <line x1="200" y1="555" x2="270" y2="600" stroke="#dc3545" stroke-width="3" marker-end="url(#arrowhead)"/><text x="248" y="572" fill="#dc3545" font-weight="bold" font-size="10">NO</text>
-                            <g onclick="alert('⚠️ IHC non conclusivo!\nPanel esteso:\nAdipofil. → sebaceo\nGATA3/TTF1/CDX2 → metastasi\nSOX10 → melanocitario')">
+                            <g onclick="alert('⚠️ IHC non conclusivo!\nPannello esteso:\nAdipofil. → sebaceo\nGATA3/TTF1/CDX2 → metastasi\nSOX10 → melanocitario')">
                                 <rect x="230" y="600" width="200" height="95" rx="10" fill="#6c757d" stroke="#495057" stroke-width="2"/>
                                 <text x="330" y="625" text-anchor="middle" fill="white" font-weight="bold" font-size="12">IHC NON CONCLUSIVO</text>
                                 <text x="330" y="645" text-anchor="middle" fill="white" font-size="9">Adipofilina → sebaceo</text>
@@ -208,16 +242,17 @@
                             <line x1="760" y1="315" x2="800" y2="360" stroke="#dc3545" stroke-width="3" marker-end="url(#arrowhead)"/><text x="797" y="333" fill="#dc3545" font-weight="bold" font-size="10">NO</text>
                             <g>
                                 <rect x="700" y="360" width="180" height="100" rx="10" fill="#ffd700" stroke="#ff8c00" stroke-width="2"/>
-                                <text x="790" y="385" text-anchor="middle" font-weight="bold" font-size="11">CK7+ Ber-EP4−?</text>
-                                <text x="790" y="403" text-anchor="middle" font-size="9">+ infiltrazione profonda</text>
-                                <text x="790" y="418" text-anchor="middle" font-size="9">+ desmoplasia</text>
+                                <text x="790" y="382" text-anchor="middle" font-weight="bold" font-size="10">Ber-EP4− + ≥2 criteri MAC?</text>
+                                <text x="790" y="400" text-anchor="middle" font-size="8">(infiltrazione / desmoplasia /</text>
+                                <text x="790" y="415" text-anchor="middle" font-size="8">microcisti / perineurale)</text>
+                                <text x="790" y="430" text-anchor="middle" font-size="8" fill="#666">CK7 = supporto accessorio</text>
                                 <text x="790" y="435" text-anchor="middle" font-size="8" fill="#dc3545">⛔ BLOCCO su punch superficiale</text>
                             </g>
                             <line x1="790" y1="460" x2="790" y2="505" stroke="#dc3545" stroke-width="3" marker-end="url(#arrowhead)"/><text x="808" y="483" fill="#dc3545" font-weight="bold">SÌ</text>
-                            <g onclick="alert('🚨 MAC sospetto!\nS100 per perineurale.\nMohs = GOLD STANDARD.\n⛔ NON diagnosticare su punch superficiale — richiedere escissione profonda prima di diagnosi definitiva.')">
+                            <g onclick="alert('🚨 MAC sospetto!\nS100 per perineurale.\nMohs = GOLD STANDARD.\nBer-EP4: di solito negativo — ma positività focale non esclude MAC.\n⛔ NON diagnosticare su punch superficiale.')">
                                 <rect x="700" y="505" width="180" height="125" rx="10" fill="#dc3545" stroke="#721c24" stroke-width="2"/>
                                 <text x="790" y="533" text-anchor="middle" fill="white" font-weight="bold" font-size="16">MAC</text>
-                                <text x="790" y="553" text-anchor="middle" fill="white" font-size="9">CK7+ Ber-EP4−</text>
+                                <text x="790" y="553" text-anchor="middle" fill="white" font-size="9">Ber-EP4− + morfologia MAC</text>
                                 <text x="790" y="568" text-anchor="middle" fill="white" font-size="8">NO duttali ben definiti</text>
                                 <text x="790" y="583" text-anchor="middle" fill="white" font-size="8">+ infiltrazione + desmoplasia</text>
                                 <text x="790" y="600" text-anchor="middle" fill="white" font-size="8">S100 perineurale!</text>
@@ -225,13 +260,13 @@
                             </g>
                             <defs><marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#333"/></marker></defs>
                         </svg>
-                        <div class="alert alert-info" style="margin-top: 20px;"><strong>💡 Tip:</strong> Clicca sui box colorati per info rapide! v15.5: Ber-EP4 diffuso/focale distinto — impatta DD BCC vs trichoepithelioma.</div>
+                        <div class="alert alert-info" style="margin-top: 20px;"><strong>💡 Suggerimento:</strong> Clicca sui box colorati per info rapide. Morfologia prima, IHC a supporto.</div>
                     </div>
                 </div>
             </div>
 
             <!-- ============================================================ -->
-            <!-- MORFOLOGIA -->
+            <!-- MORFOLOGIA — PATCH 1 (punteggio) + PATCH 2 (etichette ancillari) -->
             <!-- ============================================================ -->
             <div class="section">
                 <div class="section-header" onclick="toggleSection('morphology')">
@@ -239,40 +274,54 @@
                     <span class="toggle-icon" id="morphology-icon">▼</span>
                 </div>
                 <div class="section-content" id="morphology-content">
+
+                    <h4 style="color:#667eea; margin-bottom:8px;">Criteri pesati (attivi nel punteggio):</h4>
                     <div class="checkbox-group">
                         <div class="checkbox-item"><input type="checkbox" id="palisade" name="morphology"><label for="palisade">Palizzata periferica nucleare <span class="badge badge-info">+3</span></label></div>
                         <div class="checkbox-item"><input type="checkbox" id="retraction" name="morphology"><label for="retraction">Retrazione stromale <span class="badge badge-secondary">+2</span> <span style="font-size:0.8em;color:#856404;">solo se con palizzata</span></label></div>
                         <div class="checkbox-item"><input type="checkbox" id="basaloid" name="morphology"><label for="basaloid">Cellule basaloidi (citoplasma scarso) <span class="badge badge-secondary">+2</span></label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="clefting" name="morphology"><label for="clefting">Spazi chiari peri-tumorali (clefting) <span class="badge badge-secondary">+2</span></label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="mucin" name="morphology"><label for="mucin">Stroma mucinoso</label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="apoptosis" name="morphology"><label for="apoptosis">Corpi apoptotici</label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="pigment" name="morphology"><label for="pigment">Pigmento melanico</label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="papillary" name="morphology"><label for="papillary">Papille stromali fibrose (follicolare)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="clefting" name="morphology"><label for="clefting">Spazi chiari peri-tumorali (distacco artefattuale) <span class="badge badge-secondary">+2</span></label></div>
                     </div>
+
+                    <!-- PATCH 2: Checkbox morte → "Descrittori ancillari non pesati" -->
+                    <div class="ancillary-group">
+                        <div class="group-label">📋 Descrittori ancillari (non pesati — solo documentazione morfologica)</div>
+                        <div class="checkbox-group" style="margin:8px 0 0 0;">
+                            <div class="checkbox-item"><input type="checkbox" id="mucin" name="morphology"><label for="mucin">Stroma mucinoso</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="apoptosis" name="morphology"><label for="apoptosis">Corpi apoptotici</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="pigment" name="morphology"><label for="pigment">Pigmento melanico</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="papillary" name="morphology"><label for="papillary">Papille stromali fibrose (follicolare)</label></div>
+                        </div>
+                    </div>
+
                     <button onclick="analyzeMorphology()">Analizza Morfologia</button>
-                    <button onclick="resetMorphology()">Reset</button>
-                    <div class="disclaimer">⚠️ Score operativo (non validato formalmente). Palizzata è il criterio trainante (+3); retrazione da sola — senza palizzata — è artefatto non specifico e vale +2 solo in quel contesto. Clefting e basaloide sono supportivi.<br><strong>⚠️ Profondità infiltrativa non valutabile su biopsie superficiali/tangenziali — rivalutare su campione con sottocute incluso.</strong></div>
+                    <button onclick="resetMorphology()">Azzera</button>
+                    <div class="disclaimer">
+                        ⚠️ Punteggio operativo (non validato formalmente). Palizzata è il criterio trainante (+3).<br>
+                        <strong>Retrazione stromale (+2) è pesata SOLO in presenza di palizzata</strong> — senza palizzata è artefatto da fissazione non specifico.<br>
+                        Il distacco artefattuale e il pattern basaloide sono supportivi.<br>
+                        <strong>⚠️ Profondità infiltrativa non valutabile su biopsie superficiali/tangenziali — rivalutare su campione con sottocute incluso.</strong>
+                    </div>
                     <div id="morphology-result"></div>
                 </div>
             </div>
 
             <!-- ============================================================ -->
-            <!-- IHC PANEL — v15.5: Ber-EP4 diffuso/focale, CK5/6 integrato -->
+            <!-- PANNELLO IHC -->
             <!-- ============================================================ -->
             <div class="section">
                 <div class="section-header" onclick="toggleSection('ihc')">
-                    <span>🧪 PANEL IHC — Diagnosi Differenziale</span>
+                    <span>🧪 PANNELLO IHC — Diagnosi Differenziale</span>
                     <span class="toggle-icon" id="ihc-icon">▼</span>
                 </div>
                 <div class="section-content" id="ihc-content">
 
                     <div class="alert alert-info" style="margin-bottom:10px;">
-                        <strong>v15.5 — Novità:</strong> Ber-EP4 ora distingue <em>diffuso</em> vs <em>focale</em> (impatta DD BCC/trichoepithelioma). CK5/6 integrato nella logica. Avvocato del diavolo attivo su campioni superficiali.
+                        <strong>v16.1:</strong> Gerarchia rami corretta: eccrina → MAC (solo morfologia) → indeterminato. CK7 non più grilletto MAC — Ber-EP4− + ≥2 criteri morfologici attiva il ramo MAC anche senza CK7. CEA+ focale non espelle MAC. CK7 e CEA: supporti accessori, non portinai.
                     </div>
 
-                    <h4 style="color:#667eea;">Panel base — basaloide/squamoide:</h4>
+                    <h4 style="color:#667eea;">Pannello base — basaloide/squamoide:</h4>
                     <div class="ihc-group-grid">
-                        <!-- Ber-EP4: diffuso vs focale (FIX chiave v15.5) -->
                         <div class="ihc-row">
                             <input type="checkbox" id="berep4" name="ihc" style="width:20px;height:20px;margin-right:8px;">
                             <label for="berep4">Ber-EP4</label>
@@ -288,21 +337,21 @@
                         <div class="ihc-row"><input type="checkbox" id="ema" name="ihc" style="width:20px;height:20px;margin-right:8px;"><label for="ema">EMA (focale/duttale)</label></div>
                     </div>
 
-                    <h4 style="color:#667eea;">Panel eccrina/MAC:</h4>
+                    <h4 style="color:#667eea;">Pannello eccrina/MAC:</h4>
                     <div class="ihc-group-grid">
-                        <div class="ihc-row"><input type="checkbox" id="ck7" name="ihc" style="width:20px;height:20px;margin-right:8px;"><label for="ck7">CK7 (diffuso)</label></div>
+                        <div class="ihc-row"><input type="checkbox" id="ck7" name="ihc" style="width:20px;height:20px;margin-right:8px;"><label for="ck7">CK7 (diffuso) — <span style="font-size:0.85em;color:#856404;">accessorio in MAC, non discriminante primario</span></label></div>
                         <div class="ihc-row"><input type="checkbox" id="cea" name="ihc" style="width:20px;height:20px;margin-right:8px;"><label for="cea">CEA (duttale)</label></div>
                         <div class="ihc-row"><input type="checkbox" id="s100" name="ihc" style="width:20px;height:20px;margin-right:8px;"><label for="s100">S100 (perineurale — MAC)</label></div>
                     </div>
 
-                    <h4 style="color:#667eea;">Panel stromale/follicolare:</h4>
+                    <h4 style="color:#667eea;">Pannello stromale/follicolare:</h4>
                     <div class="ihc-group-grid">
                         <div class="ihc-row"><input type="checkbox" id="cd10" name="ihc" style="width:20px;height:20px;margin-right:8px;"><label for="cd10">CD10 (stromale)</label></div>
                         <div class="ihc-row"><input type="checkbox" id="cd34" name="ihc" style="width:20px;height:20px;margin-right:8px;"><label for="cd34">CD34 (stromale)</label></div>
                         <div class="ihc-row"><input type="checkbox" id="ck20" name="ihc" style="width:20px;height:20px;margin-right:8px;"><label for="ck20">CK20 (cellule di Merkel)</label></div>
                     </div>
 
-                    <h4 style="color:#667eea;">Panel sebaceo/metastasi:</h4>
+                    <h4 style="color:#667eea;">Pannello sebaceo/metastasi:</h4>
                     <div class="ihc-group-grid">
                         <div class="ihc-row"><input type="checkbox" id="androgen" name="ihc" style="width:20px;height:20px;margin-right:8px;"><label for="androgen">Recettore androgenico (AR)</label></div>
                         <div class="ihc-row"><input type="checkbox" id="adipophilin" name="ihc" style="width:20px;height:20px;margin-right:8px;"><label for="adipophilin">Adipofilina (sebaceo — specifico)</label></div>
@@ -312,7 +361,7 @@
                     </div>
 
                     <button onclick="analyzeIHC()">Analizza IHC</button>
-                    <button onclick="resetIHC()">Reset</button>
+                    <button onclick="resetIHC()">Azzera</button>
                     <div id="ihc-result"></div>
                 </div>
             </div>
@@ -339,7 +388,7 @@
                     <div class="checkbox-group">
                         <div class="checkbox-item"><input type="checkbox" id="var-infiltrative" name="variant" onchange="updateVariantInfo()"><label for="var-infiltrative">Infiltrativo</label></div>
                         <div class="checkbox-item"><input type="checkbox" id="var-micronodular" name="variant" onchange="updateVariantInfo()"><label for="var-micronodular">Micronodulare ⚠️ DD/MAC</label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="var-morphea" name="variant" onchange="updateVariantInfo()"><label for="var-morphea">Morpheiforme/Sclerosante</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="var-morphea" name="variant" onchange="updateVariantInfo()"><label for="var-morphea">Morfeiforme/Sclerosante</label></div>
                         <div class="checkbox-item"><input type="checkbox" id="var-basosquamous" name="variant" onchange="updateVariantInfo()"><label for="var-basosquamous">Basosquamoso (Metatipico) ⚠️</label></div>
                         <div class="checkbox-item"><input type="checkbox" id="var-mixed" name="variant" onchange="updateVariantInfo()"><label for="var-mixed">Misto (con componente aggressiva)</label></div>
                     </div>
@@ -358,8 +407,21 @@
                 <div class="section-content" id="eccrine-content">
                     <div class="alert alert-danger"><strong>⚠️ RED FLAGS CRITICHE:</strong><br>
                     • Strutture duttali BEN DEFINITE + CK7+ + Ber-EP4− = LESIONE ECCRINA<br>
-                    • CK7+ + Ber-EP4− + ASSENZA duttali ben definiti + infiltrazione profonda = MAC!<br>
+                    • Ber-EP4− + ≥2 criteri morfologici MAC (± CK7 accessorio) = MAC candidato<br>
                     <span style="font-size:0.9em; display:block; margin-top:6px;"><strong>⚠️ Sede:</strong> palmo/pianta → poroma più probabile; volto/labbro superiore → MAC in DD.</span>
+                    </div>
+
+                    <!-- Checkbox morfologia MAC dedicata -->
+                    <div class="alert alert-info" style="margin-bottom:15px;">
+                        <strong>🔬 Indicatori morfologici per il ramo MAC</strong> — compilare per attivare la logica MAC anche senza CK7:
+                        <div class="checkbox-group" style="margin-top:10px;">
+                            <div class="checkbox-item"><input type="checkbox" id="morph-deep" name="macmorph" onchange=""><label for="morph-deep">Infiltrazione profonda (derma profondo/sottocute)</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="morph-desmoplasia" name="macmorph" onchange=""><label for="morph-desmoplasia">Stroma desmoplastico prominente</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="morph-microcysts" name="macmorph" onchange=""><label for="morph-microcysts">Microcisti cheratiniche o pseudoduttali mal definiti</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="morph-perineural" name="macmorph" onchange=""><label for="morph-perineural">Invasione perineurale (o S100+ perineurale)</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="morph-ductal-absent" name="macmorph" onchange=""><label for="morph-ductal-absent">Assenza duttali ben definiti (cuticole, lumi)</label></div>
+                        </div>
+                        <p style="font-size:0.85em; margin-top:8px; color:#6c757d; font-style:italic;">≥2 criteri morfologici MAC + Ber-EP4− = candidato MAC indipendentemente da CK7.</p>
                     </div>
                     <table>
                         <thead><tr><th>Feature</th><th>BCC</th><th>Poroma</th><th>Idroadenoma</th><th>Spiroadenoma</th><th>Siringoma</th><th>MAC</th></tr></thead>
@@ -371,16 +433,20 @@
                             <tr><td><strong>Stroma desmoplastico</strong></td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>✓✓</td></tr>
                             <tr><td><strong>Invasione perineurale</strong></td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>✓ (~50-70%)</td></tr>
                             <tr><td><strong>Cuticole</strong></td><td>−</td><td>✓✓</td><td>−</td><td>✓</td><td>−</td><td>−</td></tr>
-                            <tr><td><strong>Ber-EP4</strong></td><td><span class="badge badge-success">✓✓ diffuso</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td><td><span class="badge badge-danger">−</span></td></tr>
-                            <tr><td><strong>CK7</strong></td><td>−</td><td>✓</td><td>✓✓</td><td>✓✓</td><td>✓✓</td><td>✓✓</td></tr>
+                            <tr><td><strong>Ber-EP4</strong></td><td><span class="badge badge-success">✓✓ diffuso</span></td><td><span class="badge badge-danger">di solito −</span></td><td><span class="badge badge-danger">di solito −</span></td><td><span class="badge badge-danger">di solito −</span></td><td><span class="badge badge-danger">di solito −</span></td><td><span class="badge badge-warning">di solito −</span></td></tr>
+                            <tr><td><strong>CK7</strong></td><td>−</td><td>✓</td><td>✓✓</td><td>✓✓</td><td>✓✓</td><td><span style="font-size:0.85em; color:#856404;">~15% (Hoang)<br>variabile, accessorio</span></td></tr>
                             <tr><td><strong>CK5/6</strong></td><td>✓</td><td>✓✓</td><td>+/−</td><td>+/−</td><td>−</td><td>−/+</td></tr>
                             <tr><td><strong>CEA</strong></td><td>−</td><td>✓</td><td>✓✓</td><td>✓</td><td>✓</td><td>✓ (focale)</td></tr>
-                            <tr><td><strong>p63 diffuso</strong></td><td>✓✓</td><td>−</td><td>+/−</td><td>+/−</td><td>−</td><td>+/− (variabile)</td></tr>
+                            <tr><td><strong>p63 diffuso</strong></td><td>✓✓</td><td>+/− variabile</td><td>+/− variabile</td><td>+/− variabile</td><td>−</td><td>✓ (spesso+, non discriminante)</td></tr>
                             <tr><td><strong>p40</strong></td><td>✓</td><td>−</td><td>−</td><td>−</td><td>−</td><td>−/+ variabile</td></tr>
                             <tr><td><strong>S100 (perineurale)</strong></td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>✓✓ ESSENZIALE</td></tr>
                         </tbody>
                     </table>
-                    <p class="disclaimer">* MAC può avere pseudo-duttali/microcisti con aspetto duttiforme, ma sono <strong>mal definiti/incompleti</strong> (no cuticole, no lumi ben formati). Chiave: qualità morfologica, non solo presenza.</p>
+                    <p class="disclaimer">
+                        * MAC può avere pseudo-duttali/microcisti con aspetto duttiforme, ma sono <strong>mal definiti/incompleti</strong> (no cuticole, no lumi ben formati).<br>
+                        ⚠️ <strong>Ber-EP4 nei tumori annessiali:</strong> la negatività non è assoluta — poroma, idroadenoma, spiroadenoma, trichoepithelioma e siringoma condroide possono mostrare Ber-EP4 focale o, raramente, diffuso. Il pattern diffuso è <em>fortemente orientante</em> per BCC nel corretto contesto morfologico, ma non patognomonico.<br>
+                        ⚠️ <strong>CK7 in MAC:</strong> Hoang et al. riportano CK7 nel 15% dei MAC e nel 40% dei BCC infiltrativi — CK7 non è quindi un marcatore affidabile per MAC. Usare come supporto accessorio, non come discriminante primario.
+                    </p>
 
                     <h3>🔴 DD CRITICA: MAC vs BCC MICRONODULARE</h3>
                     <div class="alert alert-danger">
@@ -390,21 +456,21 @@
                             <tr><td style="padding:6px; border:1px solid #ddd;"><strong>Ber-EP4</strong></td><td style="padding:6px; border:1px solid #ddd; background:#d4edda;">✓✓ POSITIVO (diffuso)</td><td style="padding:6px; border:1px solid #ddd; background:#f8d7da;">NEGATIVO</td></tr>
                             <tr><td style="padding:6px; border:1px solid #ddd;"><strong>Palizzata periferica</strong></td><td style="padding:6px; border:1px solid #ddd;">Presente (anche se ridotta)</td><td style="padding:6px; border:1px solid #ddd;">Assente</td></tr>
                             <tr><td style="padding:6px; border:1px solid #ddd;"><strong>Retrazione stromale</strong></td><td style="padding:6px; border:1px solid #ddd;">Presente</td><td style="padding:6px; border:1px solid #ddd;">Assente</td></tr>
-                            <tr><td style="padding:6px; border:1px solid #ddd;"><strong>CK7</strong></td><td style="padding:6px; border:1px solid #ddd; background:#f8d7da;">Negativo</td><td style="padding:6px; border:1px solid #ddd; background:#d4edda;">✓✓ POSITIVO</td></tr>
+                            <tr><td style="padding:6px; border:1px solid #ddd;"><strong>CK7</strong></td><td style="padding:6px; border:1px solid #ddd; background:#f8d7da;">Negativo</td><td style="padding:6px; border:1px solid #ddd; background:#fff3cd;">variabile (~15% Hoang, accessorio)</td></tr>
                             <tr><td style="padding:6px; border:1px solid #ddd;"><strong>CK5/6</strong></td><td style="padding:6px; border:1px solid #ddd;">✓ (basaloide)</td><td style="padding:6px; border:1px solid #ddd;">−/+ variabile</td></tr>
                             <tr><td style="padding:6px; border:1px solid #ddd;"><strong>Microcisti cheratiniche</strong></td><td style="padding:6px; border:1px solid #ddd;">No</td><td style="padding:6px; border:1px solid #ddd;">Sì</td></tr>
                             <tr><td style="padding:6px; border:1px solid #ddd;"><strong>Invasione perineurale</strong></td><td style="padding:6px; border:1px solid #ddd;">Rara</td><td style="padding:6px; border:1px solid #ddd;">~50-70% (S100!)</td></tr>
                         </table>
-                        <p style="margin-top:10px;"><strong>Take home:</strong> Nidi piccoli infiltranti e dubbio → <strong>Ber-EP4 + CK7 + CK5/6 obbligatori. S100 sempre.</strong></p>
+                        <p style="margin-top:10px;"><strong>Concetto chiave:</strong> Nidi piccoli infiltranti e dubbio → <strong>Ber-EP4 + CK7 + CK5/6 obbligatori. S100 sempre.</strong> La morfologia (palizzata, microcisti, desmoplasia) rimane l'asse portante; l'IHC supporta, non sostituisce.</p>
                     </div>
 
-                    <h3>⚠️ CORNER CASES — DD ESTESA:</h3>
+                    <h3>⚠️ CASI LIMITE — DD ESTESA:</h3>
                     <div class="alert alert-secondary">
                         <ul>
                             <li><strong>Carcinoma sebaceo:</strong> AR+ (ma BCC è AR+ nel 50-70%!), <mark>adipofilina+</mark> = discriminante reale, vacuoli lipidici. Muir-Torre in DD.</li>
                             <li><strong>Metastasi cutanea:</strong> CK7/CK20 pattern organo-specifico. GATA3 (mammella/uroteliale), TTF1 (polmone/tiroide), CDX2 (colon).</li>
                             <li><strong>Carcinoma basosquamoso:</strong> Ber-EP4+ focale, EMA+ focale, p40+ nelle aree squamoidi — eterogeneità intratumorale, non catturabile da un pattern monolitico.</li>
-                            <li><strong>Merkel:</strong> CK20 dot-like paranucleolare, sinaptofisina+, cromogranina+. Merkel CK20−/TTF1− esiste (~5-10%): escludere con imaging/anamnesi.</li>
+                            <li><strong>Merkel:</strong> CK20 dot-like paranucleolare, sinaptofisina+, cromogranina+, CD56+. MCV (Merkel Cell Polyomavirus, IHC: CM2B4) positivo in ~80% — MCV+ prognosi migliore; MCV− UV-driven, maggiore aggressività. MCC CK20−/TTF1− (~5-10%): CM2B4+ può essere dirimente vs metastasi SCLC.</li>
                         </ul>
                     </div>
                 </div>
@@ -420,7 +486,7 @@
                 </div>
                 <div class="section-content" id="mac-content">
                     <div class="alert alert-danger">
-                        <strong>⚠️ "Il lupo travestito da agnello":</strong> Morfologia BLAND + infiltrazione PROFONDA + ASSENZA duttali BEN DEFINITI = MAC!<br>
+                        <strong>⚠️ "Il lupo travestito da agnello":</strong> Morfologia BLANDA + infiltrazione PROFONDA + ASSENZA duttali BEN DEFINITI = MAC!<br>
                         <strong style="display:block; margin-top:8px;">⛔ Su punch superficiale: sospendere giudizio definitivo. Richiedere escissione/rebiopsia profonda prima di firmare la diagnosi.</strong>
                     </div>
                     <h3>🔬 Features diagnostiche chiave:</h3>
@@ -438,10 +504,10 @@
                     </div>
                     <h3>🧪 IHC per MAC:</h3>
                     <table>
-                        <thead><tr><th>Marker</th><th>MAC</th><th>Note Critiche</th></tr></thead>
+                        <thead><tr><th>Marcatore</th><th>MAC</th><th>Note critiche</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>CK7</strong></td><td><span class="badge badge-success">✓✓ Diffuso</span></td><td>Marker chiave — differenziazione eccrino-duttale infiltrante</td></tr>
-                            <tr><td><strong>Ber-EP4</strong></td><td><span class="badge badge-danger">⚠️ NEGATIVO</span></td><td>Discrimina da BCC — se Ber-EP4+ diffuso → NON è MAC</td></tr>
+                            <tr><td><strong>CK7</strong></td><td><span class="badge badge-warning">variabile (Hoang: ~15%)</span></td><td><strong>Marcatore accessorio.</strong> Secondo Hoang et al.: presente nel 15% dei MAC e nel 40% dei BCC infiltrativi. CK7− è la norma in MAC; CK7+ è un supporto non esclusivo. Non usare come criterio d'ingresso.</td></tr>
+                            <tr><td><strong>Ber-EP4</strong></td><td><span class="badge badge-warning">⚠️ di solito negativo o non diffuso</span></td><td>La positività diffusa favorisce fortemente BCC; la positività focale/non uniforme non esclude da sola MAC. Criterio più affidabile di CK7.</td></tr>
                             <tr><td><strong>CK5/6</strong></td><td><span class="badge badge-warning">−/+ variabile</span></td><td>Spesso + nelle componenti squamoidi superficiali. <strong>Non discriminante da BCC infiltrativo</strong> — non usarlo per DD MAC/BCC.</td></tr>
                             <tr><td><strong>CEA</strong></td><td><span class="badge badge-warning">✓ focale</span></td><td>Meno diffuso che in poroma/spiroadenoma</td></tr>
                             <tr><td><strong>p63</strong></td><td><span class="badge badge-warning">✓ variabile (spesso +)</span></td><td>Frequentemente positivo — <strong>non ha valore discriminante negativo</strong>. p63− in MAC non esclude la diagnosi.</td></tr>
@@ -455,11 +521,11 @@
                         <ul>
                             <li><strong>Mohs surgery = GOLD STANDARD — sempre preferita quando disponibile</strong></li>
                             <li><strong>Margini convenzionali ≥10mm:</strong> solo se Mohs non disponibile o non fattibile (recidiva comunque 15-20%)</li>
-                            <li><strong>Follow-up:</strong> ogni 3-6 mesi × 5 anni</li>
+                            <li><strong>Controllo periodico:</strong> ogni 3-6 mesi × 5 anni</li>
                             <li><strong>Imaging pre-op se:</strong> invasione profonda/perineurale, zona H, >2cm</li>
                         </ul>
                     </div>
-                    <h3>🚨 PITFALLS COMUNI:</h3>
+                    <h3>🚨 INSIDIE COMUNI:</h3>
                     <div class="alert alert-warning">
                         <ol>
                             <li><strong>Biopsia superficiale:</strong> aspetto benigno misconosciuto</li>
@@ -468,14 +534,14 @@
                             <li><strong>Pseudo-duttali interpretati come veri:</strong> verificare qualità (cuticole? lumi formati?)</li>
                             <li><strong>Non richiedere S100:</strong> miss invasione perineurale = miss prognostico</li>
                             <li><strong>Margini inadeguati:</strong> recidive anche dopo Mohs parziale</li>
-                            <li><strong>Non richiedere CK7+Ber-EP4 panel:</strong> diagnosi ritardata</li>
+                            <li><strong>Affidarsi solo a CK7 per diagnosi MAC:</strong> CK7 supporta, non decide da solo — combinare con morfologia + Ber-EP4</li>
                         </ol>
                     </div>
                 </div>
             </div>
 
             <!-- ============================================================ -->
-            <!-- BIBLIOGRAFIA -->
+            <!-- BIBLIOGRAFIA — PATCH 5: NCCN 1.2026 -->
             <!-- ============================================================ -->
             <div class="section">
                 <div class="section-header" onclick="toggleSection('bibliography')">
@@ -490,7 +556,7 @@
                             <li><strong>Crowson AN.</strong> Basal cell carcinoma: biology, morphology and clinical implications. <em>Mod Pathol</em> 2006;19:S127-S147. ⭐ <a href="https://doi.org/10.1038/modpathol.3800512" target="_blank" class="bib-link">DOI</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/16446711/" target="_blank" class="bib-link">PMID: 16446711</a></li>
                         </ol>
                         <div class="disclaimer" style="margin:5px 0 15px 0;">
-                            ⚠️ <strong>Nota v15.5 — Ref. Rowe 1992 rimossa da questa sezione.</strong> Rowe DE et al. <em>J Am Acad Dermatol</em> 1992 riguarda i fattori prognostici dell'SCC, non del BCC. Era fuori contesto nella sezione morfologia BCC. Rimane disponibile come riferimento per la DD basosquamosa se necessario.
+                            ⚠️ <strong>Nota — Ref. Rowe 1992 rimossa da questa sezione.</strong> Rowe DE et al. riguarda i fattori prognostici dell'SCC, non del BCC. Rimane disponibile come riferimento per la DD basosquamosa se necessario.
                         </div>
                         <h3>🧪 Immunoistochimica:</h3>
                         <ol start="3">
@@ -501,7 +567,7 @@
                         </ol>
                         <h3>⚠️ Varianti BCC & Management:</h3>
                         <ol start="7">
-                            <li><strong>NCCN Clinical Practice Guidelines in Oncology: Basal Cell Skin Cancer.</strong> Version 1.2024. ⭐⭐ <a href="https://www.nccn.org/guidelines/guidelines-detail?category=1&id=1416" target="_blank" class="bib-link">Link NCCN</a></li>
+                            <li><strong>NCCN Clinical Practice Guidelines in Oncology: Basal Cell Skin Cancer.</strong> Version 1.2026. ⭐⭐ <a href="https://www.nccn.org/guidelines/guidelines-detail?category=1&id=1416" target="_blank" class="bib-link">Link NCCN</a></li>
                             <li><strong>Bichakjian CK et al.</strong> Basal Cell Skin Cancer, Version 1.2016. <em>J Natl Compr Canc Netw</em> 2016;14:574-597. <a href="https://doi.org/10.6004/jnccn.2016.0065" target="_blank" class="bib-link">DOI</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/27160235/" target="_blank" class="bib-link">PMID: 27160235</a></li>
                             <li><strong>Leibovitch I et al.</strong> Basal cell carcinoma treated with Mohs surgery in Australia II. <em>J Am Acad Dermatol</em> 2005;53:452-457. <a href="https://doi.org/10.1016/j.jaad.2005.04.087" target="_blank" class="bib-link">DOI</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/16112352/" target="_blank" class="bib-link">PMID: 16112352</a></li>
                         </ol>
@@ -526,7 +592,7 @@
                             <li><strong>Zalla MJ et al.</strong> Microcystic adnexal carcinoma: a Mohs series. <em>Dermatol Surg</em> 2005;31:1386-1391. <a href="https://doi.org/10.1111/j.1524-4725.2005.31230" target="_blank" class="bib-link">DOI</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/16188198/" target="_blank" class="bib-link">PMID: 16188198</a></li>
                         </ol>
                         <div class="alert alert-info" style="margin-top: 20px;">
-                            <strong>💡</strong> DOI e PMID garantiscono accesso permanente. Totale referenze v15.5: 20 (rimossa ref. Rowe 1992 fuori contesto).
+                            <strong>💡</strong> Totale referenze v16.1: 20. DOI e PMID garantiscono accesso permanente. NCCN aggiornato a Version 1.2026.
                         </div>
                     </div>
                 </div>
@@ -534,15 +600,17 @@
 
         </div><!-- end .content -->
 
+        <!-- PATCH 4: Footer versioning corretto -->
         <footer>
-            <p>🔬 Tool Diagnostico Lesioni Basaloidi v15.5</p>
+            <p>🔬 Tool Diagnostico Lesioni Basaloidi v16.1</p>
             <p>Evidence-Based • 2026 • <a href="https://github.com/Infingardo" target="_blank">@Infingardo</a></p>
             <p style="font-size: 0.8em; margin-top: 10px; opacity: 0.8;">Per uso educazionale. Non sostituisce il giudizio clinico-morfologico.</p>
         </footer>
     </div><!-- end .container -->
 
     <!-- ================================================================== -->
-    <!-- JAVASCRIPT -->
+    <!-- JAVASCRIPT — PATCH 1: punteggio retrazione condizionato a palizzata -->
+    <!--              PATCH 3: safeguard MAC esteso a CK7+/Ber-EP4− su superficiale -->
     <!-- ================================================================== -->
     <script>
 
@@ -554,6 +622,53 @@
             content.classList.toggle('active');
             icon.classList.toggle('rotated');
         }
+    }
+
+
+    // ---- RESET COMPLETO ----
+    function resetAll() {
+        // Morfologia
+        document.querySelectorAll('input[name="morphology"]').forEach(cb => cb.checked = false);
+        document.getElementById('morphology-result').innerHTML = '';
+
+        // IHC
+        document.querySelectorAll('input[name="ihc"]').forEach(cb => cb.checked = false);
+        const bext = document.getElementById('berep4-extent');
+        if (bext) bext.value = 'diffuse';
+        document.getElementById('ihc-result').innerHTML = '';
+
+        // Varianti
+        document.querySelectorAll('input[name="variant"]').forEach(cb => cb.checked = false);
+        document.getElementById('variant-details').innerHTML = '<div class="alert alert-info">Seleziona una variante per i dettagli.</div>';
+
+        // Morfologia MAC
+        document.querySelectorAll('input[name="macmorph"]').forEach(cb => cb.checked = false);
+
+        // Dati clinici
+        const site = document.getElementById('clinical-site');
+        const biopsy = document.getElementById('clinical-biopsy');
+        if (site) site.value = '';
+        if (biopsy) biopsy.value = '';
+        document.getElementById('clinical-recurrence').checked = false;
+        document.getElementById('clinical-immunosupp').checked = false;
+        document.getElementById('clinical-warnings').innerHTML = '';
+
+        // Riapre la sezione dati clinici, chiude le altre
+        ['clinical','flowchart','morphology','ihc','variants','eccrine','mac','bibliography'].forEach(id => {
+            const c = document.getElementById(id + '-content');
+            const ic = document.getElementById(id + '-icon');
+            if (!c || !ic) return;
+            if (id === 'clinical') {
+                c.classList.add('active');
+                ic.classList.remove('rotated');
+            } else {
+                c.classList.remove('active');
+                ic.classList.remove('rotated');
+            }
+        });
+
+        // Scroll in cima
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // ---- CLINICAL WARNINGS ----
@@ -570,11 +685,11 @@
         const warnings = [];
 
         if (site === 'h-zone')
-            warnings.push('<span class="badge badge-danger">Zona H</span> Margini ≥6mm o Mohs per qualsiasi BCC in questa sede. <strong>⚠️ In zona H: se CK7+/Ber-EP4−, sospetto MAC deve salire di livello — sede tipica di MAC aggressivo.</strong>');
+            warnings.push('<span class="badge badge-danger">Zona H</span> Alert gestionale: valutare Mohs per BCC ad alto rischio in questa sede. <strong>⚠️ In zona H: Ber-EP4− con morfologia infiltrativa/desmoplastica o CK7+ — sospetto MAC deve salire di livello (sede tipica di MAC aggressivo).</strong>');
         if (site === 'palmoplantar')
             warnings.push('<span class="badge badge-info">Palmo/Pianta</span> BCC raro. Sede tipica per poroma eccrina — tenerla in DD.');
         if (biopsy === 'punch-superficial')
-            warnings.push('<span class="badge badge-warning">Biopsia superficiale ⚠️</span> MAC e varianti infiltrative possono essere misconosciute. Score morfologico sottostimato. <strong>Analisi IHC MAC bloccata</strong> finché non disponibile escissione profonda.');
+            warnings.push('<span class="badge badge-warning">Biopsia superficiale ⚠️</span> MAC e varianti infiltrative possono essere misconosciute. Punteggio morfologico sottostimato. <strong>Analisi IHC MAC BLOCCATA</strong> su pattern Ber-EP4− con CK7+ e/o ≥2 criteri morfologici MAC su punch superficiale — necessaria escissione profonda prima della diagnosi definitiva.');
         if (recurrence)
             warnings.push('<span class="badge badge-danger">Recidiva</span> Sospettare variante aggressiva misconosciuta. Mohs fortemente raccomandato.');
         if (immunosupp)
@@ -589,24 +704,32 @@
 
     // ---- MORFOLOGIA ----
     function analyzeMorphology() {
-        const palisade = document.getElementById('palisade').checked;
+        const palisade  = document.getElementById('palisade').checked;
         const retraction = document.getElementById('retraction').checked;
-        const basaloid = document.getElementById('basaloid').checked;
-        const clefting = document.getElementById('clefting').checked;
-        const score = (palisade ? 3 : 0) + (retraction ? 2 : 0) + (basaloid ? 2 : 0) + (clefting ? 2 : 0);
-        // Avvocato del diavolo: retrazione senza palizzata
-        const retractionWithoutPalisade = retraction && !palisade;
-        const resultDiv = document.getElementById('morphology-result');
-        const superficial = isSuperFicialBiopsy();
-        const retractionNote = retractionWithoutPalisade ? '<p class="disclaimer" style="margin-top:8px;"><strong>⚠️ Retrazione senza palizzata:</strong> non è specifica per BCC — può essere artefatto da fissazione in qualsiasi lesione cutanea. Peso ridotto a +2 in assenza di palizzata.</p>' : '';
-        const superficialNote = superficial ? '<p class="disclaimer" style="margin-top:8px;"><strong>⚠️ Biopsia superficiale:</strong> profondità infiltrativa non valutabile — rivalutare su campione con sottocute incluso.</p>' : '';
+        const basaloid  = document.getElementById('basaloid').checked;
+        const clefting  = document.getElementById('clefting').checked;
 
+        // PATCH 1: retrazione vale +2 SOLO se c'è anche palizzata
+        const retractionPoints = (retraction && palisade) ? 2 : 0;
+        const score = (palisade ? 3 : 0) + retractionPoints + (basaloid ? 2 : 0) + (clefting ? 2 : 0);
+
+        const retractionWithoutPalisade = retraction && !palisade;
+        const superficial = isSuperFicialBiopsy();
+
+        const retractionNote = retractionWithoutPalisade
+            ? '<p class="disclaimer" style="margin-top:8px;"><strong>⚠️ Retrazione senza palizzata:</strong> non è specifica per BCC — artefatto da fissazione non esclusivo. Non pesata nello score (+0). Rivalutare su campione di qualità ottimale.</p>'
+            : '';
+        const superficialNote = superficial
+            ? '<p class="disclaimer" style="margin-top:8px;"><strong>⚠️ Biopsia superficiale:</strong> profondità infiltrativa non valutabile — rivalutare su campione con sottocute incluso.</p>'
+            : '';
+
+        const resultDiv = document.getElementById('morphology-result');
         if (score >= 6)
-            resultDiv.innerHTML = `<div class="result-box success"><h3>✅ PATTERN BCC-LIKE (alta probabilità)</h3><p><strong>Score: ${score}/9</strong></p><p>Confermare con Ber-EP4 diffuso + p63. Se piccola/simmetrica: DD trichoepithelioma. Se EMA+ focale: DD basosquamoso.</p>${retractionNote}${superficialNote}</div>`;
+            resultDiv.innerHTML = `<div class="result-box success"><h3>✅ ASPETTO BCC-SIMILE (alta probabilità)</h3><p><strong>Punteggio: ${score}/9</strong></p><p>Confermare con Ber-EP4 diffuso + p63. Se piccola/simmetrica: DD trichoepithelioma. Se EMA+ focale: DD basosquamoso.</p>${retractionNote}${superficialNote}</div>`;
         else if (score >= 3)
-            resultDiv.innerHTML = `<div class="result-box warning"><h3>⚠️ PATTERN BASALOIDE INDETERMINATO</h3><p><strong>Score: ${score}/9</strong></p><p>DD: Tricoblastoma, lesioni eccrine, MAC, basosquamoso. Panel IHC raccomandato.</p>${retractionNote}${superficialNote}</div>`;
+            resultDiv.innerHTML = `<div class="result-box warning"><h3>⚠️ PROFILO BASALOIDE INDETERMINATO</h3><p><strong>Punteggio: ${score}/9</strong></p><p>DD: Tricoblastoma, lesioni eccrine, MAC, basosquamoso. Pannello IHC raccomandato.</p>${retractionNote}${superficialNote}</div>`;
         else
-            resultDiv.innerHTML = `<div class="result-box danger"><h3>❌ PATTERN NON BCC-LIKE</h3><p><strong>Score: ${score}/9</strong></p><p>Valutare: lesioni eccrine, MAC, metastasi, sebaceo. Panel IHC esteso.</p>${retractionNote}${superficialNote}</div>`;
+            resultDiv.innerHTML = `<div class="result-box danger"><h3>❌ ASPETTO NON BCC-SIMILE</h3><p><strong>Punteggio: ${score}/9</strong></p><p>Valutare: lesioni eccrine, MAC, metastasi, sebaceo. Pannello IHC esteso.</p>${retractionNote}${superficialNote}</div>`;
     }
 
     function resetMorphology() {
@@ -614,32 +737,31 @@
         document.getElementById('morphology-result').innerHTML = '';
     }
 
-    // ---- IHC ANALYSIS — v15.5 ----
+    // ---- IHC ANALYSIS ----
     function analyzeIHC() {
-        // raccolta valori
-        const berep4     = document.getElementById('berep4').checked;
-        const berep4ext  = document.getElementById('berep4-extent').value; // 'diffuse' | 'focal'
-        const p63        = document.getElementById('p63').checked;
-        const p40        = document.getElementById('p40').checked;
-        const ck56       = document.getElementById('ck56').checked;
-        const bcl2       = document.getElementById('bcl2').checked;
-        const ema        = document.getElementById('ema').checked;
-        const ck7        = document.getElementById('ck7').checked;
-        const cea        = document.getElementById('cea').checked;
-        const s100       = document.getElementById('s100').checked;
-        const cd10       = document.getElementById('cd10').checked;
-        const cd34       = document.getElementById('cd34').checked;
-        const ck20       = document.getElementById('ck20').checked;
-        const androgen   = document.getElementById('androgen').checked;
-        const adipophilin= document.getElementById('adipophilin').checked;
-        const gata3      = document.getElementById('gata3').checked;
-        const ttf1       = document.getElementById('ttf1').checked;
-        const cdx2       = document.getElementById('cdx2').checked;
-        const superficial= isSuperFicialBiopsy();
+        const berep4      = document.getElementById('berep4').checked;
+        const berep4ext   = document.getElementById('berep4-extent').value;
+        const p63         = document.getElementById('p63').checked;
+        const p40         = document.getElementById('p40').checked;
+        const ck56        = document.getElementById('ck56').checked;
+        const bcl2        = document.getElementById('bcl2').checked;
+        const ema         = document.getElementById('ema').checked;
+        const ck7         = document.getElementById('ck7').checked;
+        const cea         = document.getElementById('cea').checked;
+        const s100        = document.getElementById('s100').checked;
+        const cd10        = document.getElementById('cd10').checked;
+        const cd34        = document.getElementById('cd34').checked;
+        const ck20        = document.getElementById('ck20').checked;
+        const androgen    = document.getElementById('androgen').checked;
+        const adipophilin = document.getElementById('adipophilin').checked;
+        const gata3       = document.getElementById('gata3').checked;
+        const ttf1        = document.getElementById('ttf1').checked;
+        const cdx2        = document.getElementById('cdx2').checked;
+        const superficial = isSuperFicialBiopsy();
 
-        const resultDiv  = document.getElementById('ihc-result');
+        const resultDiv = document.getElementById('ihc-result');
 
-        // --- SEBACEOUS: adipofilina è discriminante definitivo ---
+        // --- SEBACEOUS ---
         if (adipophilin) {
             resultDiv.innerHTML = `<div class="result-box danger">
                 <h3>🟡 ADIPOFILINA+ : CARCINOMA SEBACEO PROBABILE</h3>
@@ -650,7 +772,7 @@
             return;
         }
 
-        // --- AR+ da solo: NON conclusivo ---
+        // --- AR+ da solo ---
         if (androgen && !adipophilin && !ck7 && !gata3 && !ttf1 && !cdx2) {
             const msg = berep4
                 ? `<div class="result-box warning"><h3>⚠️ AR+ CON Ber-EP4+ : NON CONCLUSIVO PER SEBACEO</h3>
@@ -669,9 +791,9 @@
             if (ttf1)  origin.push('polmone/tiroide (TTF1)');
             if (cdx2)  origin.push('GI/colon-retto (CDX2)');
             resultDiv.innerHTML = `<div class="result-box danger">
-                <h3>🔴 PATTERN SUGGESTIVO PER METASTASI CUTANEA</h3>
-                <p>Marker organo-specifici: <strong>${origin.join(', ')}</strong>.</p>
-                <p>Profilo non compatibile con neoplasia cutanea primitiva. Staging sistemico + correlazione anamnesi oncologica.</p>
+                <h3>🔴 PROFILO SUGGESTIVO PER METASTASI CUTANEA</h3>
+                <p>Marcatori organo-specifici: <strong>${origin.join(', ')}</strong>.</p>
+                <p>Profilo non compatibile con neoplasia cutanea primitiva. Stadiazione sistemica + correlazione anamnesi oncologica.</p>
             </div>`;
             return;
         }
@@ -681,50 +803,100 @@
             resultDiv.innerHTML = `<div class="result-box danger">
                 <h3>🔴 CK20+ : ALTAMENTE SUGGESTIVO PER CARCINOMA A CELLULE DI MERKEL</h3>
                 <p><strong>Pattern dot-like paranucleolare</strong>. Confermare con: Sinaptofisina, Cromogranina, CD56.</p>
-                <p class="disclaimer">⚠️ Merkel CK20−/TTF1− esiste (~5-10%). Metastasi neuroendocrine (SCLC, carcinoide) possono mimare — escludere con imaging/anamnesi.</p>
+                <div style="background:#fff3cd; border-left:4px solid #ff8c00; padding:10px; margin:10px 0; border-radius:4px;">
+                    <strong>🦠 MCV (Merkel Cell Polyomavirus) — CM2B4:</strong>
+                    <ul style="margin-top:6px;">
+                        <li><strong>MCV+</strong> (~80% dei MCC): associato a prognosi migliore, meno instabilità genomica. IHC: CM2B4 (clone per LT-antigen), nucleare.</li>
+                        <li><strong>MCV−</strong> (~20%): spesso UV-driven, maggiore carico mutazionale, prognosi più severa. Associato a immunosoppressione e siti non fotoesposti.</li>
+                        <li><strong>Rilevanza pratica:</strong> MCV status sempre utile su materiale fresco/FFPE — ha rilevanza biologica e prognostica. Non è al momento un criterio standard di eleggibilità all'immunoterapia: pembrolizumab e avelumab mostrano attività sia in MCC MCV+ sia MCV−.</li>
+                        <li><strong>Nota morfologica:</strong> MCV+ e MCV− non distinguibili su EE — il pattern dot-like e la morfologia nucleare sono identici.</li>
+                    </ul>
+                </div>
+                <p class="disclaimer">⚠️ Merkel CK20−/TTF1− esiste (~5-10%): in questi casi CM2B4 può essere dirimente vs metastasi SCLC (MCV−). Metastasi neuroendocrine (SCLC, carcinoide) possono mimare — escludere con imaging/anamnesi + TTF1 + CM2B4.</p>
             </div>`;
             return;
         }
 
-        // --- PATTERN IBRIDO Ber-EP4+/CK7+ (insolito) ---
+        // --- PATTERN IBRIDO Ber-EP4+/CK7+ ---
         if (berep4 && ck7) {
             resultDiv.innerHTML = `<div class="result-box warning">
-                <h3>⚠️ PATTERN IBRIDO: Ber-EP4+ / CK7+</h3>
-                <p>Combinazione insolita. Considerare:</p>
+                <h3>⚠️ Ber-EP4+ / CK7+: CORRELAZIONE MORFOLOGICA INDISPENSABILE</h3>
+                <p>Combinazione non diagnostica di per sé. Considerare:</p>
                 <ul>
-                    <li>BCC con differenziazione eccrina focale (raro, descritto in letteratura)</li>
-                    <li>Artefatto/clone anticorpale — verificare intensità e distribuzione con patologo senior</li>
-                    <li>Ripetere IHC su sezioni diverse</li>
+                    <li><strong>Tumore annessiale con Ber-EP4 aberrante:</strong> tumori del sweat apparatus (siringoma condroide, porocarcinoma, spiroadenoma) possono essere Ber-EP4+ anche diffusamente</li>
+                    <li><strong>BCC con differenziazione annessiale/eccrina focale:</strong> raro ma descritto</li>
+                    <li><strong>Variabilità di clone/intensità:</strong> verificare distribuzione — focale vs diffusa cambia il peso del dato</li>
                 </ul>
-                <p>Correlare strettamente con morfologia. Se dubbio persiste: second opinion.</p>
+                <p>La morfologia (palizzata, duttali veri, architettura) decide. Se il dubbio persiste dopo correlazione clinico-morfologica: consulenza esterna.</p>
             </div>`;
             return;
         }
 
-        // --- MAC: safeguard ATTIVO su biopsia superficiale ---
-        const isMACcandidate = ck7 && !berep4 && !cea;
-        if (isMACcandidate && superficial) {
+        // MAC safeguard ESTESO — blocca qualunque pattern Ber-EP4−/sospetto su superficiale
+        // Logica morfologia-first: MAC candidato se morfologia convincente ANCHE senza CK7
+        const macMorphScore =
+            (document.getElementById('morph-deep')?.checked ? 1 : 0) +
+            (document.getElementById('morph-desmoplasia')?.checked ? 1 : 0) +
+            (document.getElementById('morph-microcysts')?.checked ? 1 : 0) +
+            (document.getElementById('morph-perineural')?.checked ? 1 : 0) +
+            (document.getElementById('morph-ductal-absent')?.checked ? 1 : 0);
+
+        // Blocco su superficiale: qualunque pattern Ber-EP4−/sospetto se CK7+ o morfologia MAC
+        const isCK7BerNeg = (ck7 || macMorphScore >= 2) && !berep4;
+        if (isCK7BerNeg && superficial) {
             resultDiv.innerHTML = `<div class="result-box blocked">
-                <h3>⛔ ANALISI MAC SOSPESA — CAMPIONE INADEGUATO</h3>
-                <p><strong>CK7+ Ber-EP4− su punch superficiale = pattern compatibile con MAC ma NON diagnostico.</strong></p>
-                <p>MAC si manifesta solo in profondità (derma profondo/sottocute). Un punch superficiale cattura solo la porzione benigna apparente ("siringoma-like").</p>
+                <h3>⛔ ANALISI MAC/ECCRINA SOSPESA — CAMPIONE INADEGUATO</h3>
+                <p><strong>Pattern Ber-EP4− con CK7+ e/o ≥2 criteri morfologici MAC su punch superficiale = insufficiente per diagnosi definitiva.</strong></p>
+                <p>Questo profilo (Ber-EP4−, morfologia infiltrativa/desmoplastica) è compatibile con MAC, lesione eccrina o profilo ibrido, ma su biopsia superficiale non è possibile escludere né confermare MAC — la componente infiltrativa profonda (desmoplasia, perineurale, microcisti) non è valutabile.</p>
                 <p><strong>Azioni richieste prima di concludere:</strong></p>
                 <ul>
                     <li>Richiedere escissione ampia o rebiopsia profonda con sottocute incluso</li>
                     <li>Valutare invasione perineurale su sezioni seriali (S100)</li>
                     <li>Morfologia: cercare microcisti + desmoplasia profonda</li>
                 </ul>
-                <p class="disclaimer">Emettere referto con diagnosi sospesa e raccomandazione esplicita di rebiopsia profonda.</p>
+                <p class="disclaimer">Emettere referto con diagnosi sospesa e raccomandazione esplicita di rebiopsia profonda. Se CEA+ e duttali ben definiti al campione profondo: lesione eccrina. Se CK7+ e duttali assenti + infiltrazione: MAC.</p>
             </div>`;
             return;
         }
 
-        // --- MAC su campione adeguato ---
+        // --- GERARCHIA: morfologia prima, CK7/CEA supporti ---
+        // 1. eccrineCandidate: CK7+/CEA+/Ber-EP4−  SENZA morfologia MAC convincente
+        // 2. MAC candidate: Ber-EP4− + hasMACMorph (morfologia guida, CK7 non è grilletto)
+        // 3. CK7+/Ber-EP4−/no CEA/no morfologia: profilo indeterminato
+        const hasMACMorph = macMorphScore >= 2;
+
+        // --- RAMO 1: eccrino franco (CK7+/CEA+/Ber-EP4− senza morfologia MAC) ---
+        const eccrineCandidate = ck7 && cea && !berep4 && !hasMACMorph;
+        if (eccrineCandidate) {
+            resultDiv.innerHTML = `<div class="result-box warning">
+                <h3>⚠️ CK7+ / CEA+ / Ber-EP4− : DD ECCRINA vs MAC</h3>
+                <p><strong>Morfologia MAC non convincente (&lt;2 criteri)</strong> — il profilo IHC da solo non risolve.</p>
+                <p><strong>Se duttali BEN DEFINITI (cuticole, lumi formati):</strong> Lesione eccrina (Poroma/Spiroadenoma/Siringoma/Idroadenoma).</p>
+                <p><strong>Se duttali assenti/mal definiti o infiltrazione profonda:</strong> Rivalutare con criteri morfologici MAC (sezione dedica). CEA può essere focale in MAC.</p>
+                <p class="disclaimer">Aggiungere criteri morfologici nella sezione MAC per sbloccare il ramo algoritmico dedicato.</p>
+            </div>`;
+            return;
+        }
+
+        // --- RAMO 2: MAC candidato (morfologia-first, CK7 accessorio) ---
+        // Gate: Ber-EP4− + ≥2 criteri morfologici MAC
+        // CK7 è supporto, non grilletto
+        const isMACcandidate = !berep4 && hasMACMorph;
         if (isMACcandidate) {
-            const s100note = s100 ? '<p><span class="badge badge-danger">S100+</span> Invasione perineurale documentata — indicazione assoluta a Mohs.</p>' : '<p><strong>⚠️ S100 non richiesto o non specificato.</strong> Richiedere per valutare invasione perineurale.</p>';
+            const s100note = s100
+                ? '<p><span class="badge badge-danger">S100+</span> Invasione perineurale documentata — indicazione assoluta a Mohs.</p>'
+                : '<p><strong>⚠️ S100 non richiesto o non specificato.</strong> Richiedere per valutare invasione perineurale.</p>';
+            const ceaNote = cea
+                ? '<p class="disclaimer" style="background:#fff3cd; border-left:4px solid #ff8c00;"><strong>⚠️ CEA+ rilevato:</strong> in MAC può essere positivo nelle strutture duttali cheratiniche/eccrine. CEA+ <em>focale</em> non esclude MAC se la morfologia è convincente. CEA+ <em>diffuso</em> orienta verso lesione eccrina franca — valutare distribuzione.</p>'
+                : '';
+            const ck7note = ck7
+                ? '<p><span class="badge badge-warning">CK7+</span> Supporto accessorio compatibile. Hoang et al.: CK7 nel 15% dei MAC reali — non è un requisito, né un discriminante.</p>'
+                : '<p><span class="badge badge-secondary">CK7−</span> Assenza di CK7 non esclude MAC (presente solo nel 15% dei casi per Hoang et al.).</p>';
             resultDiv.innerHTML = `<div class="result-box danger">
-                <h3>🚨 CK7+ BER-EP4− (no CEA) = MAC CANDIDATO</h3>
-                <p>Pattern IHC compatibile con MAC. Confermare su morfologia:</p>
+                <h3>🚨 PROFILO COMPATIBILE CON MAC</h3>
+                <p><strong>Ramo attivato da:</strong> Ber-EP4− + ≥2 criteri morfologici MAC.<br>Logica morfologia-first — CK7 e CEA sono supporti accessori, non portinai.</p>
+                ${ceaNote}
+                ${ck7note}
                 <ul>
                     <li>Infiltrazione profonda (derma profondo/sottocute)</li>
                     <li>Stroma desmoplastico</li>
@@ -732,17 +904,23 @@
                     <li>Assenza duttali ben definiti (cuticole, lumi formati)</li>
                 </ul>
                 ${s100note}
-                <p class="disclaimer">Se mancano i criteri morfologici: non concludere MAC — rivalutare.</p>
+                <p class="disclaimer">L'asse portante è morfologico; CK7 e Ber-EP4 supportano, non decidono.</p>
+                <p class="disclaimer" style="margin-top:8px;"><strong>⚠️ Nota operativa:</strong> Il workflow usa Ber-EP4 in modo semplificato. La positività focale/non uniforme non esclude MAC se la morfologia è convincente — valutare con sezioni seriali e correlazione clinica.</p>
             </div>`;
             return;
         }
 
-        // --- CK7+/CEA+ → eccrina o MAC ---
-        if (ck7 && cea && !berep4) {
+        // --- RAMO 3: Ber-EP4−/CK7+ senza morfologia MAC (profilo indeterminato) ---
+        if (!berep4 && ck7 && !hasMACMorph) {
             resultDiv.innerHTML = `<div class="result-box warning">
-                <h3>⚠️ CK7+ / CEA+ / Ber-EP4− : ECCRINA vs MAC</h3>
-                <p><strong>Se duttali BEN DEFINITI alla morfologia:</strong> Lesione eccrina (Poroma/Spiroadenoma/Siringoma/Idroadenoma).</p>
-                <p><strong>Se duttali assenti o mal definiti + infiltrazione profonda:</strong> Considerare MAC — CEA può essere focale in MAC.</p>
+                <h3>⚠️ Ber-EP4− / CK7+ : PROFILO INDETERMINATO</h3>
+                <p>CK7 non è più sufficiente ad attivare il ramo MAC senza morfologia convincente.</p>
+                <ul>
+                    <li>Aggiungere criteri morfologici MAC (sezione dedica) per sbloccare il ramo algoritmico</li>
+                    <li>Valutare CEA per orientare verso lesione eccrina</li>
+                    <li>Considerare campione inadeguato / sezioni seriali</li>
+                </ul>
+                <p class="disclaimer">⚠️ Se la morfologia è fortemente sospetta per MAC ma i criteri non raggiungono la soglia: consulenza esterna. La soglia ≥2 è operativa, non assoluta.</p>
             </div>`;
             return;
         }
@@ -751,30 +929,49 @@
         if (berep4 && berep4ext === 'diffuse' && p63 && !ck7 && !ema) {
             let extras = '';
             if (bcl2) extras += '<p><span class="badge badge-info">Bcl-2+</span> supporta la diagnosi.</p>';
-            if (ck56) extras += '<p><span class="badge badge-info">CK5/6+</span> compatibile con BCC (è un carcinoma basaloide CK5/6+). Non discriminante da solo.</p>';
+            if (ck56) extras += '<p><span class="badge badge-info">CK5/6+</span> compatibile con BCC (carcinoma basaloide CK5/6+). Non discriminante da solo.</p>';
             resultDiv.innerHTML = `<div class="result-box success">
-                <h3>✅ PATTERN FORTEMENTE SUGGESTIVO PER BCC</h3>
+                <h3>✅ PROFILO FORTEMENTE SUGGESTIVO PER BCC</h3>
                 <p><strong>Ber-EP4 diffuso / p63+ diffuso</strong></p>
                 ${extras}
-                <p class="disclaimer">⚠️ Se lesione piccola, simmetrica, con papille stromali e stroma CD10+/CD34+: non escludere trichoepithelioma (DD follicolare).</p>
+                <p class="disclaimer">⚠️ Se lesione piccola, simmetrica, con papille stromali e stroma CD10+/CD34+: non escludere trichoepithelioma (DD follicolare). Ber-EP4 focale nei trichoepitheliomi: presente in quota non trascurabile. Il pattern diffuso è fortemente orientante per BCC nel corretto contesto morfologico, ma non assoluto.</p>
             </div>`;
             return;
         }
 
-        // --- Ber-EP4 FOCALE: BCC vs Trichoepithelioma — con ramo infiltrativo (v15.6) ---
+        // --- BASOSQUAMOSO (più specifico: prima del ramo focale generico) ---
+        if (berep4 && p63 && p40 && ema) {
+            resultDiv.innerHTML = `<div class="result-box warning">
+                <h3>⚠️ PROFILO SUGGESTIVO PER CARCINOMA BASOSQUAMOSO</h3>
+                <p><strong>Ber-EP4+ / p63+ / p40+ / EMA+ focale</strong></p>
+                <p>Componente basaloide + squamoide. <strong>Variante aggressiva — margini ≥6mm o Mohs.</strong></p>
+                <p class="disclaimer">p40 e EMA tipicamente positivi nelle aree squamoidi (eterogeneità intratumorale). Mappare le aree su sezioni multiple. Ref: Beer 2000, Histopathology.</p>
+            </div>`;
+            return;
+        }
+
+        // --- BCC CON EMA FOCALE (più specifico: prima del ramo focale generico) ---
+        if (berep4 && p63 && ema && !ck7 && !p40) {
+            resultDiv.innerHTML = `<div class="result-box warning">
+                <h3>⚠️ BCC CON EMA+ FOCALE: VALUTARE BASOSQUAMOSO</h3>
+                <p>EMA focale in contesto Ber-EP4+ suggerisce possibile differenziazione squamoide.</p>
+                <p><strong>Richiedere p40:</strong> se p40+ diffuso nelle aree EMA+ → carcinoma basosquamoso.</p>
+            </div>`;
+            return;
+        }
+
+        // --- Ber-EP4 FOCALE: BCC vs Trichoepithelioma ---
         if (berep4 && berep4ext === 'focal' && p63) {
             const follicular = (cd10 || cd34);
-            // BCC infiltrativo/micronodulare può perdere Ber-EP4 nelle aree profonde
-            // Se variante aggressiva selezionata e CK7−: BCC rimane più probabile, non spingere verso follicolare
             const morphInfiltrative = document.getElementById('var-infiltrative')?.checked || document.getElementById('var-micronodular')?.checked || false;
             if (morphInfiltrative && !ck7) {
                 resultDiv.innerHTML = `<div class="result-box warning">
                     <h3>⚠️ Ber-EP4 FOCALE + PATTERN INFILTRATIVO + CK7−</h3>
                     <p><strong>BCC infiltrativo rimane probabile — non virare verso follicolare.</strong></p>
-                    <p>BCC infiltrativi/micronodulari possono perdere parzialmente Ber-EP4 nelle aree profonde. CK7 negativo depone contro MAC o lesione eccrina.</p>
+                    <p>BCC infiltrativi/micronodulari possono perdere parzialmente Ber-EP4 nelle aree profonde. CK7− depone contro MAC o lesione eccrina.</p>
                     <ul>
                         <li>Ber-EP4 almeno focale (vs MAC dove è assente)</li>
-                        <li>CK7− (MAC è CK7+ diffuso)</li>
+                        <li>CK7− (MAC nel solo 15% dei casi per Hoang et al.)</li>
                         <li>Cercare palizzata residua anche se ridotta nelle aree superficiali</li>
                     </ul>
                     <p class="disclaimer">DD follicolare meno probabile in assenza di simmetria e stroma CD10+/CD34+.</p>
@@ -796,28 +993,7 @@
             return;
         }
 
-        // --- BASOSQUAMOSO ---
-        if (berep4 && p63 && p40 && ema) {
-            resultDiv.innerHTML = `<div class="result-box warning">
-                <h3>⚠️ PATTERN SUGGESTIVO PER CARCINOMA BASOSQUAMOSO</h3>
-                <p><strong>Ber-EP4+ / p63+ / p40+ / EMA+ focale</strong></p>
-                <p>Features basaloidi + squamoidi. <strong>Variante aggressiva — margini ≥6mm o Mohs.</strong></p>
-                <p class="disclaimer">Nota: p40 e EMA tipicamente positivi nelle aree squamoidi (eterogeneità intratumorale). Mappare le aree su sezioni multiple. Ref: Beer 2000, Histopathology.</p>
-            </div>`;
-            return;
-        }
-
-        // --- BCC con EMA focale ---
-        if (berep4 && p63 && ema && !ck7 && !p40) {
-            resultDiv.innerHTML = `<div class="result-box warning">
-                <h3>⚠️ BCC CON EMA+ FOCALE: VALUTARE BASOSQUAMOSO</h3>
-                <p>EMA focale in contesto Ber-EP4+ suggerisce possibile differenziazione squamoide.</p>
-                <p><strong>Richiedere p40:</strong> se p40+ diffuso nelle aree EMA+ → carcinoma basosquamoso.</p>
-            </div>`;
-            return;
-        }
-
-        // --- CK5/6 positivo da solo o con p63 (senza Ber-EP4) ---
+        // --- CK5/6 positivo da solo ---
         if (ck56 && !berep4 && p63 && !ck7 && !cd10 && !cd34) {
             resultDiv.innerHTML = `<div class="result-box warning">
                 <h3>⚠️ CK5/6+ / p63+ / Ber-EP4− : CARCINOMA SQUAMOCELLULARE in DD</h3>
@@ -837,16 +1013,16 @@
         if ((cd10 || cd34) && !berep4 && !ck7) {
             resultDiv.innerHTML = `<div class="result-box warning">
                 <h3>⚠️ STROMA CD10/CD34+ : LESIONE FOLLICOLARE</h3>
-                <p>Pattern compatibile con tricoblastoma/trichoepithelioma.</p>
+                <p>Profilo compatibile con tricoblastoma/trichoepithelioma.</p>
                 <p><strong>Confermare con morfologia:</strong> simmetria, papille stromali, assenza retrazione artefattuale.</p>
                 <p class="disclaimer">⚠️ Ber-EP4 può essere focalmente+ in alcuni trichoepitheliomi — intensità e distribuzione contano.</p>
             </div>`;
             return;
         }
 
-        // --- DEFAULT non conclusivo ---
+        // --- DEFAULT ---
         resultDiv.innerHTML = `<div class="result-box">
-            <h3>📊 PATTERN IHC NON CONCLUSIVO — ESTENDERE PANEL</h3>
+            <h3>📊 PROFILO IHC NON CONCLUSIVO — ESTENDERE PANEL</h3>
             <p>Profilo atipico o incompleto. Suggerire:</p>
             <ul>
                 <li><strong>Adipofilina, EMA, AR:</strong> carcinoma sebaceo</li>
@@ -872,10 +1048,10 @@
             'var-infundibulo':   { name: 'BCC Infundibulo-Cistico', risk: 'low', desc: 'Raro. Cisti infundibulari con palizzata. Prognosi eccellente.', margins: '4mm', recurrence: '<5%', mohs: 'Non necessaria' },
             'var-pinkus':        { name: 'BCC Fibroepiteliale (Pinkus)', risk: 'low', desc: 'Cordoni anastomizzanti in stroma fibroso. Indolente.', margins: '4mm', recurrence: '<5%', mohs: 'Non necessaria' },
             'var-infiltrative':  { name: 'BCC Infiltrativo', risk: 'high', desc: 'Cordoni irregolari infiltranti in profondità. Margini clinicamente mal definiti.', margins: '≥6mm (Mohs preferita)', recurrence: '20-25%', mohs: '✓✓ FORTEMENTE RACCOMANDATA' },
-            'var-micronodular':  { name: 'BCC Micronodulare', risk: 'high', desc: 'Nidi piccoli (<0.15mm) oltre margini apparenti. ⚠️ DD critica con MAC: entrambi hanno nidi piccoli + stroma. Chiave: Ber-EP4 diffuso (BCC), CK7 (MAC), palizzata (BCC), microcisti (MAC).', margins: '≥6mm (Mohs preferita)', recurrence: '15-20%', mohs: '✓✓ FORTEMENTE RACCOMANDATA' },
-            'var-morphea':       { name: 'BCC Morpheiforme/Sclerosante', risk: 'high', desc: 'Stroma desmoplastico prominente. Aggressivo. Simula cicatrice clinicamente.', margins: '≥8-10mm (Mohs GOLD STANDARD)', recurrence: '25-30%', mohs: '✓✓✓ INDICAZIONE ASSOLUTA' },
+            'var-micronodular':  { name: 'BCC Micronodulare', risk: 'high', desc: 'Nidi piccoli (<0.15mm) oltre margini apparenti. ⚠️ DD critica con MAC: entrambi hanno nidi piccoli + stroma. Chiave: Ber-EP4 diffuso (BCC), CK7 (MAC accessorio), palizzata (BCC), microcisti (MAC).', margins: '≥6mm (Mohs preferita)', recurrence: '15-20%', mohs: '✓✓ FORTEMENTE RACCOMANDATA' },
+            'var-morphea':       { name: 'BCC Morfeiforme/Sclerosante', risk: 'high', desc: 'Stroma desmoplastico prominente. Aggressivo. Simula cicatrice clinicamente.', margins: '≥8-10mm (Mohs GOLD STANDARD)', recurrence: '25-30%', mohs: '✓✓✓ INDICAZIONE ASSOLUTA' },
             'var-basosquamous':  { name: 'BCC Basosquamoso (Metatipico)', risk: 'high', desc: 'Componente basaloide + squamoide. Ber-EP4+ focale, EMA+ focale, p40+ nelle aree squamoidi. Eterogeneità intratumorale — mappare su sezioni multiple. Potenziale metastatico.', margins: '≥6mm (Mohs preferita)', recurrence: '20-30%', mohs: '✓✓ FORTEMENTE RACCOMANDATA' },
-            'var-mixed':         { name: 'BCC Misto', risk: 'high', desc: 'Combinazione di pattern. Management secondo componente più aggressiva.', margins: 'Secondo sottotipo peggiore', recurrence: 'Secondo componente aggressiva', mohs: 'Se componente aggressiva >10%' }
+            'var-mixed':         { name: 'BCC Misto', risk: 'high', desc: 'Combinazione di aspetti morfologici. Management secondo componente più aggressiva.', margins: 'Secondo sottotipo peggiore', recurrence: 'Secondo componente aggressiva', mohs: 'Se componente aggressiva >10%' }
         };
 
         let html = '';
@@ -902,7 +1078,7 @@
                 <li>Imaging pre-op se zona H / invasione profonda</li>
                 <li>Follow-up ogni 6 mesi × 2 anni, poi annuale</li>
                 <li>Consulenza dermatochirurgica per Mohs</li>
-                ${hasBasosquamous ? '<li><strong>Basosquamoso:</strong> potenziale metastatico — staging linfonodale se >2cm o recidiva</li>' : ''}
+                ${hasBasosquamous ? '<li><strong>Basosquamoso:</strong> potenziale metastatico — stadiazione linfonodale se >2cm o recidiva</li>' : ''}
             </ul></div>` + html;
         }
 
