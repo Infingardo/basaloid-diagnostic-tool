@@ -461,7 +461,7 @@
                             <tr><td style="padding:6px; border:1px solid #ddd;"><strong>Microcisti cheratiniche</strong></td><td style="padding:6px; border:1px solid #ddd;">No</td><td style="padding:6px; border:1px solid #ddd;">Sì</td></tr>
                             <tr><td style="padding:6px; border:1px solid #ddd;"><strong>Invasione perineurale</strong></td><td style="padding:6px; border:1px solid #ddd;">Rara</td><td style="padding:6px; border:1px solid #ddd;">~50-70% (S100!)</td></tr>
                         </table>
-                        <p style="margin-top:10px;"><strong>Concetto chiave:</strong> Nidi piccoli infiltranti e dubbio → <strong>Ber-EP4 + CK7 + CK5/6 obbligatori. S100 sempre.</strong> La morfologia (palizzata, microcisti, desmoplasia) rimane l'asse portante; l'IHC supporta, non sostituisce.</p>
+                        <p style="margin-top:10px;"><strong>Concetto chiave:</strong> Nidi piccoli infiltranti e dubbio → <strong>Ber-EP4 e S100 da includere sempre.</strong> CK7 e CK5/6 utili come supporto contestuale, non decisivi da soli — CK7 accessorio in MAC (Hoang: 15%), CK5/6 non discriminante nella DD MAC/BCC infiltrativo. La morfologia resta l'asse portante.</p>
                     </div>
 
                     <h3>⚠️ CASI LIMITE — DD ESTESA:</h3>
@@ -590,9 +590,88 @@
                             <li><strong>Chiller K et al.</strong> Microcystic adnexal carcinoma: forty-eight cases. <em>Arch Dermatol</em> 2000;136:1355-1359. <a href="https://doi.org/10.1001/archderm.136.11.1355" target="_blank" class="bib-link">DOI</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/11074699/" target="_blank" class="bib-link">PMID: 11074699</a></li>
                             <li><strong>Leibovitch I et al.</strong> Microcystic adnexal carcinoma: treatment with Mohs. <em>J Am Acad Dermatol</em> 2005;52:295-300. ⭐ <a href="https://doi.org/10.1016/j.jaad.2004.10.868" target="_blank" class="bib-link">DOI</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/15692477/" target="_blank" class="bib-link">PMID: 15692477</a></li>
                             <li><strong>Zalla MJ et al.</strong> Microcystic adnexal carcinoma: a Mohs series. <em>Dermatol Surg</em> 2005;31:1386-1391. <a href="https://doi.org/10.1111/j.1524-4725.2005.31230" target="_blank" class="bib-link">DOI</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/16188198/" target="_blank" class="bib-link">PMID: 16188198</a></li>
+                            <li><strong>Hoang MP, Dresser KA, Kapur P, et al.</strong> Microcystic adnexal carcinoma: an immunohistochemical reappraisal. <em>Mod Pathol</em> 2008;21:178-185. ⭐ <a href="https://doi.org/10.1038/modpathol.3800989" target="_blank" class="bib-link">DOI</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/18091545/" target="_blank" class="bib-link">PMID: 18091545</a> — <em>Fonte primaria: CK7 nel 15% MAC, 40% BCC infiltrativo; Ber-EP4 nel 38% MAC.</em></li>
                         </ol>
                         <div class="alert alert-info" style="margin-top: 20px;">
-                            <strong>💡</strong> Totale referenze v16.1: 20. DOI e PMID garantiscono accesso permanente. NCCN aggiornato a Version 1.2026.
+                            <strong>💡</strong> Totale referenze v16.1: 21. DOI e PMID garantiscono accesso permanente. NCCN aggiornato a Version 1.2026.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ============================================================ -->
+            <!-- GENERA REFERTO                                                 -->
+            <!-- ============================================================ -->
+            <div class="section" id="referto-section">
+                <div class="section-header" onclick="toggleSection('referto')">
+                    <span>📄 GENERA REFERTO</span>
+                    <span class="toggle-icon" id="referto-icon">▼</span>
+                </div>
+                <div class="section-content active" id="referto-content">
+                    <div style="padding: 10px 0;">
+                        <p style="margin-bottom:14px; color:#555;">Compila i campi facoltativi, poi genera il referto sulla base di tutte le selezioni effettuate.</p>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
+                            <div>
+                                <label style="font-weight:bold; font-size:0.9em;">N. campione / accession:</label>
+                                <input type="text" id="rep-accession" placeholder="es. 2026-12345" style="width:100%; padding:7px; border:1px solid #ccc; border-radius:6px; margin-top:4px; font-size:0.9em;">
+                            </div>
+                            <div>
+                                <label style="font-weight:bold; font-size:0.9em;">Sede anatomica (libera):</label>
+                                <input type="text" id="rep-sede" placeholder="es. regione naso-labiale sinistra" style="width:100%; padding:7px; border:1px solid #ccc; border-radius:6px; margin-top:4px; font-size:0.9em;">
+                            </div>
+                            <div>
+                                <label style="font-weight:bold; font-size:0.9em;">Tipo campione:</label>
+                                <select id="rep-campione" style="width:100%; padding:7px; border:1px solid #ccc; border-radius:6px; margin-top:4px; font-size:0.9em; background:white;">
+                                    <option value="">-- Seleziona --</option>
+                                    <option value="Biopsia escissionale">Biopsia escissionale</option>
+                                    <option value="Biopsia incisionale">Biopsia incisionale</option>
+                                    <option value="Escissione fusiforme">Escissione fusiforme</option>
+                                    <option value="Punch biopsy">Punch biopsy</option>
+                                    <option value="Shave biopsy">Shave biopsy</option>
+                                    <option value="Riesportazione (re-escissione)">Riesportazione (re-escissione)</option>
+                                    <option value="Chirurgia di Mohs">Chirurgia di Mohs</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="font-weight:bold; font-size:0.9em;">Patologo:</label>
+                                <input type="text" id="rep-patologo" placeholder="es. Dr. F. Bianchi" style="width:100%; padding:7px; border:1px solid #ccc; border-radius:6px; margin-top:4px; font-size:0.9em;">
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom:16px;">
+                            <label style="font-weight:bold; font-size:0.9em;">Note morfologiche libere (facoltativo):</label>
+                            <textarea id="rep-note-morfo" rows="2" placeholder="es. proliferazione basaloide con palizzata periferica, retrazione stromale..." style="width:100%; padding:7px; border:1px solid #ccc; border-radius:6px; margin-top:4px; font-size:0.9em; resize:vertical;"></textarea>
+                        </div>
+                        <div style="margin-bottom:16px;">
+                            <label style="font-weight:bold; font-size:0.9em;">Diagnosi differenziale (libera, facoltativo):</label>
+                            <textarea id="rep-dd" rows="2" placeholder="es. BCC infiltrativo vs MAC; escludere BCC morfeiforme" style="width:100%; padding:7px; border:1px solid #ccc; border-radius:6px; margin-top:4px; font-size:0.9em; resize:vertical;"></textarea>
+                        </div>
+
+                        <button onclick="generaReferto()" style="background:linear-gradient(135deg,#667eea,#764ba2); color:white; border:none; padding:13px 30px; border-radius:8px; cursor:pointer; font-size:1em; font-weight:bold; margin-right:10px; box-shadow:0 3px 12px rgba(102,126,234,0.35);">
+                            📄 Genera referto
+                        </button>
+                        <button onclick="document.getElementById('referto-output').value=''; document.getElementById('referto-box').style.display='none';" style="background:#6c757d; color:white; border:none; padding:13px 20px; border-radius:8px; cursor:pointer; font-size:0.9em;">
+                            Cancella
+                        </button>
+
+                        <div id="referto-box" style="display:none; margin-top:20px;">
+                            <label style="font-weight:bold; font-size:0.95em; display:block; margin-bottom:6px;">📋 Referto generato — copiare nel LIS:</label>
+                            <textarea id="referto-output" rows="22" readonly
+                                style="width:100%; padding:12px; border:2px solid #667eea; border-radius:8px; font-family:'Courier New',monospace; font-size:0.85em; line-height:1.6; background:#f8f9ff; resize:vertical;"
+                                onclick="this.select()"></textarea>
+                            <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+                                <button onclick="copiaReferto()" style="background:#28a745; color:white; border:none; padding:9px 20px; border-radius:6px; cursor:pointer; font-weight:bold;">
+                                    📋 Copia negli appunti
+                                </button>
+                                <button onclick="scaricaReferto()" style="background:#17a2b8; color:white; border:none; padding:9px 20px; border-radius:6px; cursor:pointer; font-weight:bold;">
+                                    💾 Scarica .txt
+                                </button>
+                            </div>
+                            <p style="font-size:0.75em; color:#999; margin-top:8px; font-style:italic;">
+                                ⚠️ Referto generato da tool di supporto diagnostico. Revisionare e integrare prima dell'emissione ufficiale.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -654,7 +733,7 @@
         document.getElementById('clinical-warnings').innerHTML = '';
 
         // Riapre la sezione dati clinici, chiude le altre
-        ['clinical','flowchart','morphology','ihc','variants','eccrine','mac','bibliography'].forEach(id => {
+        ['clinical','flowchart','morphology','ihc','variants','eccrine','mac','bibliography','referto'].forEach(id => {
             const c = document.getElementById(id + '-content');
             const ic = document.getElementById(id + '-icon');
             if (!c || !ic) return;
@@ -666,6 +745,16 @@
                 ic.classList.remove('rotated');
             }
         });
+
+        // Referto
+        document.getElementById('rep-accession').value = '';
+        document.getElementById('rep-sede').value = '';
+        document.getElementById('rep-campione').value = '';
+        document.getElementById('rep-patologo').value = '';
+        document.getElementById('rep-note-morfo').value = '';
+        document.getElementById('rep-dd').value = '';
+        document.getElementById('referto-output').value = '';
+        document.getElementById('referto-box').style.display = 'none';
 
         // Scroll in cima
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -817,8 +906,10 @@
             return;
         }
 
-        // --- PATTERN IBRIDO Ber-EP4+/CK7+ ---
-        if (berep4 && ck7) {
+        // --- PROFILO IBRIDO Ber-EP4+/CK7+ ---
+        // Nota: basosquamoso (p40+/EMA+) è già intercettato sopra; questo ramo
+        // cattura i casi senza caratterizzazione squamoide completa
+        if (berep4 && ck7 && !(p40 && ema)) {
             resultDiv.innerHTML = `<div class="result-box warning">
                 <h3>⚠️ Ber-EP4+ / CK7+: CORRELAZIONE MORFOLOGICA INDISPENSABILE</h3>
                 <p>Combinazione non diagnostica di per sé. Considerare:</p>
@@ -1083,6 +1174,191 @@
         }
 
         document.getElementById('variant-details').innerHTML = html || '<div class="alert alert-info">Seleziona una variante per i dettagli.</div>';
+    }
+
+
+    // ================================================================
+    // GENERA REFERTO
+    // ================================================================
+    function generaReferto() {
+        const data = new Date().toLocaleDateString('it-IT');
+
+        // Raccolta campi liberi
+        const accession = document.getElementById('rep-accession')?.value.trim() || '';
+        const sede      = document.getElementById('rep-sede')?.value.trim() || '';
+        const campione  = document.getElementById('rep-campione')?.value.trim() || '';
+        const patologo  = document.getElementById('rep-patologo')?.value.trim() || '';
+        const noteMorfo = document.getElementById('rep-note-morfo')?.value.trim() || '';
+
+        // Dati clinici dal pannello
+        const siteEl   = document.getElementById('clinical-site');
+        const biopsyEl = document.getElementById('clinical-biopsy');
+        const sedeClin  = siteEl   ? (siteEl.options[siteEl.selectedIndex]?.text   || '') : '';
+        const biopsyTxt = biopsyEl ? (biopsyEl.options[biopsyEl.selectedIndex]?.text || '') : '';
+        const recidiva  = document.getElementById('clinical-recurrence')?.checked ? 'sì' : 'no';
+        const immunos   = document.getElementById('clinical-immunosupp')?.checked ? 'sì' : 'no';
+
+        // Morfologia
+        const morfItems = [];
+        if (document.getElementById('palisade')?.checked)   morfItems.push('palizzata periferica');
+        if (document.getElementById('retraction')?.checked) morfItems.push('retrazione stromale');
+        if (document.getElementById('basaloid')?.checked)   morfItems.push('componente basaloide (citoplasma scarso)');
+        if (document.getElementById('clefting')?.checked)   morfItems.push('distacco artefattuale peri-tumorale');
+        const ancItems = [];
+        if (document.getElementById('mucin')?.checked)     ancItems.push('mucina');
+        if (document.getElementById('apoptosis')?.checked) ancItems.push('apoptosi prominente');
+        if (document.getElementById('pigment')?.checked)   ancItems.push('pigmentazione melanica');
+        if (document.getElementById('papillary')?.checked) ancItems.push('struttura papillare');
+        const macCrit = [];
+        if (document.getElementById('morph-deep')?.checked)         macCrit.push('infiltrazione del derma profondo/sottocute');
+        if (document.getElementById('morph-desmoplasia')?.checked)   macCrit.push('stroma desmoplastico prominente');
+        if (document.getElementById('morph-microcysts')?.checked)    macCrit.push('microcisti cheratiniche');
+        if (document.getElementById('morph-perineural')?.checked)    macCrit.push('invasione perineurale');
+        if (document.getElementById('morph-ductal-absent')?.checked) macCrit.push('assenza di strutture duttali ben definite');
+
+        // IHC — risultati per marcatore
+        const ihcResults = [];
+        const ihcMap = {
+            'berep4': 'Ber-EP4', 'p63': 'p63', 'p40': 'p40', 'ema': 'EMA',
+            'ck7': 'CK7', 'cea': 'CEA', 's100': 'S100', 'bcl2': 'Bcl-2',
+            'cd10': 'CD10', 'cd34': 'CD34', 'ck56': 'CK5/6', 'ck20': 'CK20',
+            'synaptophysin': 'Sinaptofisina', 'chromogranin': 'Cromogranina',
+            'ttf1': 'TTF1', 'cdx2': 'CDX2', 'gata3': 'GATA3',
+        };
+        for (const [id, label] of Object.entries(ihcMap)) {
+            const el = document.getElementById(id);
+            if (!el) continue;
+            if (el.checked) {
+                if (id === 'berep4') {
+                    const ext = document.getElementById('berep4-extent')?.value || 'diffuse';
+                    ihcResults.push(label + ': positivo (' + (ext === 'diffuse' ? 'diffuso' : 'focale') + ')');
+                } else {
+                    ihcResults.push(label + ': positivo');
+                }
+            }
+        }
+
+        // Variante
+        const variantMap = {
+            'var-nodular': 'Nodulare', 'var-cystic': 'Nodulare-Cistico',
+            'var-superficial': 'Superficiale/Multicentrico', 'var-morphea': 'Morfeiforme/Sclerosante',
+            'var-infiltrative': 'Infiltrativo', 'var-micronodular': 'Micronodulare',
+            'var-pigmented': 'Pigmentato', 'var-mixed': 'Misto',
+            'var-basosquamous': 'Basosquamoso (Metatipico)',
+        };
+        const varSel = [];
+        for (const [id, label] of Object.entries(variantMap)) {
+            if (document.getElementById(id)?.checked) varSel.push(label);
+        }
+
+        // Diagnosi principale e DD dal motore
+        const ihcResultEl = document.getElementById('ihc-result');
+        const morfResultEl = document.getElementById('morphology-result');
+        const ihcDiagRaw  = ihcResultEl?.querySelector('h3')?.textContent?.trim()  || '';
+        const morfDiagRaw = morfResultEl?.querySelector('h3')?.textContent?.trim() || '';
+        const ihcDiag  = ihcDiagRaw.replace(/^[\u{1F300}-\u{1FFFF}\u{2600}-\u{27FF}\s⚠️✅🚨❌🔴📊⛔]+/gu, '').trim();
+        const morfDiag = morfDiagRaw.replace(/^[\u{1F300}-\u{1FFFF}\u{2600}-\u{27FF}\s⚠️✅🚨❌🔴📊⛔]+/gu, '').trim();
+        const diagPrinc = ihcDiag || morfDiag || '—';
+
+        // DD: testo lista dal risultato IHC
+        const ihcListItems = ihcResultEl
+            ? Array.from(ihcResultEl.querySelectorAll('li'))
+                .map(li => li.textContent.trim())
+                .filter(t => t.length > 0 && t.length < 200)
+            : [];
+
+        // ── Costruzione referto LIS ──────────────────────────────────────
+        const S = '─'.repeat(56);
+        const lines = [];
+
+        // Intestazione
+        lines.push('ESAME ISTOLOGICO');
+        lines.push(S);
+        if (accession) lines.push(`N. campione:       ${accession}`);
+        lines.push(`Data:              ${data}`);
+        if (sede || sedeClin) lines.push(`Sede:              ${sede || sedeClin}`);
+        if (campione || biopsyTxt) lines.push(`Tipo campione:     ${campione || biopsyTxt}`);
+        if (recidiva === 'sì' || immunos === 'sì') {
+            const cl = [];
+            if (recidiva === 'sì')  cl.push('recidiva');
+            if (immunos  === 'sì')  cl.push('immunosoppressione');
+            lines.push(`Note cliniche:     ${cl.join(', ')}`);
+        }
+        lines.push('');
+
+        // Descrizione microscopica
+        lines.push('DESCRIZIONE MICROSCOPICA');
+        lines.push(S);
+        if (noteMorfo) {
+            lines.push(noteMorfo);
+        } else if (morfItems.length) {
+            lines.push('Proliferazione basaloide cutanea caratterizzata da: ' + morfItems.join(', ') + '.');
+        } else {
+            lines.push('Proliferazione basaloide cutanea. Vedere valutazione morfologica.');
+        }
+        if (ancItems.length) lines.push('Rilievi aggiuntivi: ' + ancItems.join(', ') + '.');
+        if (macCrit.length)  lines.push('Caratteristiche suggestive di lesione eccrina infiltrativa: ' + macCrit.join('; ') + '.');
+        lines.push('');
+
+        // IHC
+        if (ihcResults.length) {
+            lines.push('INDAGINI IMMUNOISTOCHIMICHE');
+            lines.push(S);
+            ihcResults.forEach(r => lines.push('  ' + r));
+            lines.push('');
+        }
+
+        // Variante
+        if (varSel.length) {
+            lines.push(`Sottotipo istologico: ${varSel.join(', ')}.`);
+            lines.push('');
+        }
+
+        // Diagnosi principale
+        lines.push('DIAGNOSI');
+        lines.push(S);
+        lines.push(diagPrinc + (diagPrinc.endsWith('.') ? '' : '.'));
+        lines.push('');
+
+        // DD libera (solo se compilata dall'utente)
+        const ddLibera = document.getElementById('rep-dd')?.value.trim() || '';
+        if (ddLibera) {
+            lines.push('DIAGNOSI DIFFERENZIALE');
+            lines.push(S);
+            lines.push(ddLibera);
+            lines.push('');
+        }
+
+        document.getElementById('referto-output').value = lines.join('\n');
+        document.getElementById('referto-box').style.display = 'block';
+        document.getElementById('referto-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+        function copiaReferto() {
+        const ta = document.getElementById('referto-output');
+        ta.select();
+        try {
+            navigator.clipboard.writeText(ta.value).then(() => {
+                alert('✅ Referto copiato negli appunti.');
+            }).catch(() => {
+                document.execCommand('copy');
+                alert('✅ Referto copiato.');
+            });
+        } catch(e) {
+            document.execCommand('copy');
+            alert('✅ Copiato.');
+        }
+    }
+
+    function scaricaReferto() {
+        const txt = document.getElementById('referto-output').value;
+        const acc = document.getElementById('rep-accession')?.value.trim().replace(/[^a-zA-Z0-9_-]/g,'') || 'referto';
+        const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `referto_${acc}.txt`;
+        a.click();
+        URL.revokeObjectURL(a.href);
     }
 
     </script>
